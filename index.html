@@ -21,86 +21,31 @@
       --radius: 12px;
     }
 
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg); color: var(--ink);
-      margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column;
-    }
-
-    header {
-      padding: 16px; border-bottom: 1px solid var(--line);
-      background: var(--card); text-align: center;
-      position: sticky; top: 0; z-index: 10;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+    header { padding: 16px; border-bottom: 1px solid var(--line); background: var(--card); text-align: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     header h1 { font-size: 1.1rem; font-weight: 800; color: var(--accent); margin: 0; line-height: 1.4; }
 
-    .container {
-      max-width: 650px; margin: 0 auto; padding: 16px;
-      flex: 1; display: flex; flex-direction: column; gap: 20px;
-      width: 100%; box-sizing: border-box;
-    }
-
-    .card {
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: var(--radius); padding: 20px;
-      display: flex; flex-direction: column; gap: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    .section-title {
-      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
-      color: var(--muted); font-weight: 800; margin-top: 4px; margin-bottom: 4px; 
-      border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;
-    }
+    .container { max-width: 650px; margin: 0 auto; padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 20px; width: 100%; box-sizing: border-box; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+    .section-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-weight: 800; margin-top: 4px; margin-bottom: 4px; border-bottom: 2px solid #f1f5f9; padding-bottom: 6px; }
 
     .input-row { display: flex; gap: 10px; align-items: flex-end; }
     .input-wrapper { position: relative; flex: 1; }
-    
-    .input-wrapper input, .input-wrapper select, .input-wrapper textarea {
-      width: 100%; padding: 22px 12px 6px 12px;
-      border-radius: 8px; border: 2px solid var(--line);
-      background: var(--input-bg); color: var(--ink);
-      font-size: 1.1rem; outline: none; font-weight: 600;
-      box-sizing: border-box; font-family: inherit;
-      height: 60px; transition: border-color 0.2s;
-    }
-    .input-wrapper input:focus, .input-wrapper select:focus, .input-wrapper textarea:focus {
-        border-color: var(--accent); background: #fff;
-    }
-    
+    .input-wrapper input, .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 22px 12px 6px 12px; border-radius: 8px; border: 2px solid var(--line); background: var(--input-bg); color: var(--ink); font-size: 1.1rem; outline: none; font-weight: 600; box-sizing: border-box; font-family: inherit; height: 60px; transition: border-color 0.2s; }
+    .input-wrapper input:focus, .input-wrapper select:focus, .input-wrapper textarea:focus { border-color: var(--accent); background: #fff; }
     .input-wrapper select { appearance: none; background-color: var(--input-bg); }
     .input-wrapper textarea { min-height: 400px; padding-top: 12px; font-weight: 400; resize: vertical; line-height: 1.5; }
+    .input-label { position: absolute; top: 6px; left: 14px; font-size: 0.7rem; color: var(--muted); font-weight: 700; text-transform: uppercase; pointer-events: none; z-index: 2; }
 
-    .input-label {
-      position: absolute; top: 6px; left: 14px;
-      font-size: 0.7rem; color: var(--muted); font-weight: 700;
-      text-transform: uppercase; pointer-events: none; z-index: 2;
-    }
-
-    .checkbox-group {
-        display: flex; flex-direction: column; gap: 12px;
-        background: #f8fafc; padding: 16px; border-radius: 10px; border: 2px solid var(--line);
-    }
+    .checkbox-group { display: flex; flex-direction: column; gap: 12px; background: #f8fafc; padding: 16px; border-radius: 10px; border: 2px solid var(--line); }
     .cb-row { display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; font-weight: 600; line-height: 1.4; }
     .cb-row input { width: 24px; height: 24px; accent-color: var(--accent); flex-shrink: 0; }
 
-    .btn-copy-match {
-      width: 80px; height: 60px;
-      border: 2px solid var(--line); background-color: white;
-      color: var(--accent); border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer;
-      flex-shrink: 0; box-shadow: 0 2px 2px rgba(0,0,0,0.05);
-    }
-    .btn-copy-match:active { transform: scale(0.96); background: #f0f9f9; }
+    .btn-copy-match { width: 80px; height: 60px; border: 2px solid var(--line); background-color: white; color: var(--accent); border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; flex-shrink: 0; }
     .btn-copy-match.copied { background-color: var(--success); color: white; border-color: var(--success); }
 
     .action-stack { display: flex; flex-direction: column; gap: 16px; }
-    .btn-launch {
-      display: flex; align-items: center; justify-content: center; width: 100%;
-      padding: 20px; border: none; border-radius: 12px; color: white;
-      cursor: pointer; font-size: 1.1rem; font-weight: 700; text-transform: uppercase;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s;
-    }
+    .btn-launch { display: flex; align-items: center; justify-content: center; width: 100%; padding: 20px; border: none; border-radius: 12px; color: white; cursor: pointer; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s; }
     .btn-launch:active { transform: scale(0.98); }
     .btn-accent { background-color: var(--accent); }
     .btn-red { background-color: var(--red); }
@@ -111,6 +56,13 @@
     .hidden { display: none !important; }
     .btn-back { background: transparent; border: 2px solid var(--line); padding: 10px 16px; border-radius: 8px; color: var(--ink); font-weight: 700; cursor: pointer; margin-bottom: 12px; width: 100%; text-align: center; }
     #reader { width: 100%; border-radius: 12px; overflow: hidden; display: none; margin-bottom: 12px; background: #000; }
+    
+    .rc-copy-section { display: flex; flex-direction: column; gap: 12px; background: #fff5f5; padding: 16px; border-radius: 10px; border: 2px solid #fecaca; margin-top: 8px; }
+    .rc-header { font-size: 0.75rem; color: var(--red); font-weight: 800; text-transform: uppercase; text-align: center; margin-bottom: 4px; }
+    .rc-row { display: flex; gap: 10px; align-items: stretch; }
+    .rc-input-box { flex: 1; background: white; border: 2px solid #fca5a5; border-radius: 8px; padding: 0 12px; display: flex; align-items: center; height: 55px; }
+    .rc-input-box label { font-size: 0.7rem; color: var(--red); font-weight: 700; margin-right: 10px; flex-shrink: 0; }
+    .rc-input-box input { border: none; background: transparent; width: 100%; height: 100%; font-size: 1.1rem; font-weight: 700; color: var(--ink); padding: 0; outline: none; }
   </style>
 </head>
 <body>
@@ -120,22 +72,17 @@
   </header>
 
   <div class="container">
-    
     <div id="view-home">
         <div class="card">
             <div id="reader"></div>
             <button id="btn-scan-toggle" class="btn-launch" style="background:#111827; gap:12px; margin-bottom: 10px;" onclick="toggleScanner()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/>
-                </svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
                 <span id="scan-text">Scan from Sticker QR Code</span>
             </button>
 
             <input type="file" id="qr-input-file" accept="image/*" class="hidden">
             <button class="btn-launch" style="background:#4b5563; gap:12px;" onclick="document.getElementById('qr-input-file').click()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
-                </svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                 <span>Upload or Take Photo</span>
             </button>
         </div>
@@ -164,24 +111,33 @@
             <div class="input-row"><div class="input-wrapper"><label class="input-label">UMRN</label><input type="text" id="cc-urn"></div></div>
             <div class="input-row"><div class="input-wrapper"><label class="input-label">Current Inpatient</label><select id="cc-inpatient"><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
             <div class="input-row"><div class="input-wrapper"><label class="input-label">Consultant Name</label><input type="text" id="cc-consultant"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Team (Specialty)</label><select id="cc-team"><option value="">Select Team...</option><option value="1">ASU</option><option value="7">Cardiology</option><option value="14">ED</option><option value="17">Gen Med</option><option value="18">Gen Surg</option><option value="26">ICU</option><option value="54">Renal</option></select></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Team (Specialty)</label><select id="cc-team"><option value="">Select Team...</option></select></div></div>
             <div class="input-row"><div class="input-wrapper"><label class="input-label">Caller's Name</label><input type="text" id="cc-caller"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Relationship</label><input type="text" id="cc-rel"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Relationship to Patient</label><input type="text" id="cc-rel"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Consent for Follow-up</label><select id="cc-consent"><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
             <div class="checkbox-group">
-                <label class="cb-row"><input type="checkbox" id="cc-type-phys"> Deterioration</label>
-                <label class="cb-row"><input type="checkbox" id="cc-type-comm"> Communication</label>
+                <div style="font-size:0.8rem; color:var(--muted); font-weight:800; margin-bottom:6px;">TYPE (Select all that apply)</div>
+                <label class="cb-row"><input type="checkbox" id="cc-type-phys"> Physical / Mental State Deterioration</label>
+                <label class="cb-row"><input type="checkbox" id="cc-type-comm"> Communication Issues</label>
                 <label class="cb-row"><input type="checkbox" id="cc-type-comp"> Complaint</label>
             </div>
             <div class="section-title">Details</div>
-            <div class="input-wrapper"><textarea id="cc-story" placeholder="Narrative..."></textarea></div>
+            <div class="input-wrapper"><textarea id="cc-story" placeholder="Full narrative / details..."></textarea></div>
+            <div class="checkbox-group"><label class="cb-row"><input type="checkbox" id="cc-digital" checked> Digital Medical Record Completed</label></div>
         </div>
 
         <div class="action-stack">
             <button class="btn-launch btn-accent" onclick="generatePDF()">1. Save PDF Log</button>
             <button class="btn-launch btn-blue" onclick="openEmail()">2. Open Email</button>
             <button class="btn-launch btn-red" onclick="launchRedcap('care')">3. Launch Care Call RedCap</button>
+            <div class="rc-copy-section">
+                <div class="rc-header">REDCap Handy Data</div>
+                <div class="rc-row"><div class="rc-input-box"><label>URN</label><input type="text" id="mini-urn" readonly></div><button class="btn-copy-match" onclick="copyToClipboard('mini-urn', this)">COPY</button></div>
+                <div class="rc-row"><div class="rc-input-box"><label>VISIT</label><input type="text" id="mini-visit" readonly></div><button class="btn-copy-match" onclick="copyToClipboard('mini-visit', this)">COPY</button></div>
+            </div>
             <button class="btn-launch btn-reset" onclick="resetAllFields()">Reset All Fields</button>
         </div>
+        <div style="height:40px;"></div>
     </div>
     <div id="status" style="text-align:center; color:gray; font-size:0.8rem; margin:10px;"></div>
   </div>
@@ -189,22 +145,47 @@
 <script>
     const BASE_URL = "https://datalibrary-rc.health.wa.gov.au/surveys/?s=K3WAPC4KKXWNTF3F";
     const MET_EMAIL = "fshsqr.MET@health.wa.gov.au";
-    const LOCATIONS = [{v:1, t:"3A"}, {v:2, t:"3B"}, {v:36, t:"ED"}, {v:43, t:"ICU"}];
+    
+    // RESTORED FULL LISTS
+    const LOCATIONS = [
+        {v:1, t:"3A"}, {v:2, t:"3B"}, {v:3, t:"3DMFAU"}, {v:4, t:"Birth Suite"}, {v:5, t:"3C"},
+        {v:6, t:"4A"}, {v:7, t:"4B"}, {v:8, t:"4C"}, {v:9, t:"4D"}, {v:10, t:"5A"},
+        {v:11, t:"5B"}, {v:12, t:"5C"}, {v:13, t:"5D"}, {v:14, t:"6A"}, {v:15, t:"6B"},
+        {v:16, t:"6C"}, {v:17, t:"6D"}, {v:18, t:"7A"}, {v:19, t:"7B"}, {v:20, t:"7C"},
+        {v:21, t:"7D"}, {v:22, t:"Adv Heart Failure"}, {v:23, t:"AECC"}, {v:24, t:"AH Gym"},
+        {v:25, t:"Cardiology OPC"}, {v:26, t:"Cardiac Rehab"}, {v:27, t:"Cancer Ctr"}, {v:28, t:"CC DTU"},
+        {v:29, t:"Cath Lab"}, {v:30, t:"CCU"}, {v:31, t:"Corrective Svcs"}, {v:32, t:"COVID Clinic"},
+        {v:33, t:"CSSU"}, {v:34, t:"DOSA"}, {v:35, t:"DMP"}, {v:36, t:"ED"}, {v:37, t:"Endoscopy"},
+        {v:38, t:"ESSU"}, {v:39, t:"Haemodialysis Inpt"}, {v:40, t:"Haemodialysis Outpt"},
+        {v:41, t:"HDU"}, {v:42, t:"Hyperbaric"}, {v:43, t:"ICU"}, {v:44, t:"Main Concourse"},
+        {v:45, t:"Main East"}, {v:46, t:"Main West"}, {v:47, t:"Med Imaging"}, {v:48, t:"MHA"},
+        {v:49, t:"MHB"}, {v:50, t:"MBU"}, {v:51, t:"OPC"}, {v:52, t:"OT"}, {v:53, t:"PACU"},
+        {v:54, t:"Pathwest"}, {v:55, t:"Pulm Rehab"}, {v:56, t:"Rad Onc"}, {v:57, t:"Short Stay"},
+        {v:58, t:"SRS 1A"}, {v:59, t:"SRS 2A"}, {v:60, t:"SRS A"}, {v:61, t:"SRS B"},
+        {v:62, t:"SRS Pool"}, {v:63, t:"SRS Gym"}, {v:64, t:"Transit Lounge"}
+    ];
+    const TEAMS = [
+        {v:"1", t:"ASU"}, {v:"2", t:"AHFT"}, {v:"3", t:"ALDU"}, {v:"4", t:"Anaesthesia"}, {v:"5", t:"Breast"}, {v:"6", t:"Burns"}, {v:"7", t:"Cardiology"}, {v:"8", t:"Cardiothoracics"}, {v:"9", t:"Colorectal"}, {v:"10", t:"Covid Respiratory"}, {v:"11", t:"Dental"}, {v:"12", t:"Dermatology"}, {v:"13", t:"ENT"}, {v:"14", t:"ED"}, {v:"15", t:"Endo/Diabetes"}, {v:"16", t:"Gastro"}, {v:"17", t:"Gen Med"}, {v:"18", t:"Gen Surg"}, {v:"19", t:"Geriatrics"}, {v:"20", t:"Gyn Onc"}, {v:"21", t:"Gyn"}, {v:"22", t:"Haematology"}, {v:"23", t:"Hyperbaric"}, {v:"24", t:"Immunology"}, {v:"25", t:"ID"}, {v:"26", t:"ICU"}, {v:"27", t:"Maternal-fetal"}, {v:"28", t:"MDFU"}, {v:"29", t:"Med Oncology"}, {v:"30", t:"Micro"}, {v:"31", t:"Neonatal"}, {v:"32", t:"Nephrology"}, {v:"33", t:"Neurology"}, {v:"34", t:"Neurosurgery"}, {v:"35", t:"Nuclear Med"}, {v:"37", t:"Obstetrics"}, {v:"39", t:"Theatre"}, {v:"40", t:"Ophthalmology"}, {v:"41", t:"Maxillofacial"}, {v:"42", t:"Orthopaedics"}, {v:"43", t:"Paeds Surg"}, {v:"44", t:"Paeds"}, {v:"45", t:"Pathology"}, {v:"46", t:"Plastics"}, {v:"47", t:"Psychiatry"}, {v:"49", t:"Psychogeri"}, {v:"50", t:"Rad Onc"}, {v:"51", t:"Radiology"}, {v:"52", t:"Radiotherapy"}, {v:"53", t:"Rehab"}, {v:"54", t:"Renal"}, {v:"55", t:"Respiratory"}, {v:"56", t:"Rheum"}, {v:"57", t:"Spinal"}, {v:"58", t:"Upper GI"}, {v:"59", t:"Urogyn"}, {v:"60", t:"Urology"}, {v:"61", t:"Vascular"}
+    ];
 
     const locSelect = document.getElementById('cc-location');
     LOCATIONS.forEach(l => { let opt = document.createElement('option'); opt.value = l.v; opt.text = l.t; locSelect.add(opt); });
+    const teamSelect = document.getElementById('cc-team');
+    TEAMS.forEach(t => { let opt = document.createElement('option'); opt.value = t.v; opt.text = t.t; teamSelect.add(opt); });
 
     function syncInputs() {
         const u = document.getElementById('urn-main').value;
         const v = document.getElementById('visit-main').value;
-        if(u) document.getElementById('cc-urn').value = u;
+        if(u) { document.getElementById('cc-urn').value = u; document.getElementById('mini-urn').value = u; }
+        if(v) { document.getElementById('mini-visit').value = v; }
     }
 
     function resetAllFields() {
-        if (confirm("Clear all data?")) {
+        if (confirm("Clear all patient data?")) {
             document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = "");
             document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
             document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+            document.getElementById('cc-digital').checked = true;
             showHome();
         }
     }
@@ -238,49 +219,78 @@
         });
     }
 
-    // Improved File Scan Logic
-    const fileinput = document.getElementById('qr-input-file');
-    fileinput.addEventListener('change', e => {
+    document.getElementById('qr-input-file').addEventListener('change', e => {
         if (e.target.files.length === 0) return;
-        const imageFile = e.target.files[0];
         if (!scanner) scanner = new Html5Qrcode("reader");
-        
-        // Use true to apply high-performance scanning to the file
-        scanner.scanFile(imageFile, true)
-            .then(txt => { processQrResult(txt); alert("QR Code Found!"); })
-            .catch(err => { alert("No QR code detected. Tip: Ensure the sticker is flat and well-lit, or take the photo from slightly further away."); });
+        scanner.scanFile(e.target.files[0], true).then(txt => { processQrResult(txt); alert("QR Code Found!"); })
+        .catch(err => { alert("No QR code detected. Try a clearer photo."); });
     });
 
+    // JSON-Aware Processing
     function processQrResult(txt) {
-        const u = txt.match(/([A-Z]\d{7})/i);
-        const v = txt.match(/(\d{8})/);
-        if(u) document.getElementById('urn-main').value = u[1];
-        if(v) document.getElementById('visit-main').value = v[1];
+        try {
+            const data = JSON.parse(txt);
+            if (data.u) document.getElementById('urn-main').value = data.u.toUpperCase();
+            if (data.e) document.getElementById('visit-main').value = data.e;
+        } catch (e) {
+            const urnMatch = txt.match(/([A-Z]\d{7})/i);
+            const visitMatch = txt.match(/\b\d{8,11}\b/);
+            if(urnMatch) document.getElementById('urn-main').value = urnMatch[1].toUpperCase();
+            if(visitMatch) document.getElementById('visit-main').value = visitMatch[0];
+        }
         syncInputs();
+        navigator.vibrate?.(200);
     }
 
-    function showCareLog() { document.getElementById('view-home').classList.add('hidden'); document.getElementById('view-care-log').classList.remove('hidden'); syncInputs(); }
+    function showCareLog() { document.getElementById('view-home').classList.add('hidden'); document.getElementById('view-care-log').classList.remove('hidden'); syncInputs(); window.scrollTo(0,0); }
     function showHome() { document.getElementById('view-home').classList.remove('hidden'); document.getElementById('view-care-log').classList.add('hidden'); }
 
     async function generatePDF() {
         const { jsPDF } = window.jspdf; const doc = new jsPDF();
-        doc.text("CARE Call Log", 10, 10);
-        doc.text(`URN: ${document.getElementById('cc-urn').value}`, 10, 20);
-        doc.text(`Details: ${document.getElementById('cc-story').value}`, 10, 30);
-        doc.save(`CARE_Log_${document.getElementById('cc-urn').value}.pdf`);
+        const loc = document.getElementById('cc-location');
+        const wardTxt = loc.options[loc.selectedIndex].text === "Select Ward..." ? "" : loc.options[loc.selectedIndex].text;
+        const teamSel = document.getElementById('cc-team');
+        const teamTxt = teamSel.options[teamSel.selectedIndex].text === "Select Team..." ? "" : teamSel.options[teamSel.selectedIndex].text;
+        
+        const d = {
+            sur: document.getElementById('cc-surname').value, giv: document.getElementById('cc-given').value,
+            ward: wardTxt, bed: document.getElementById('cc-bed').value, urn: document.getElementById('cc-urn').value,
+            inpt: document.getElementById('cc-inpatient').value, cons: document.getElementById('cc-consultant').value,
+            team: teamTxt, caller: document.getElementById('cc-caller').value, rel: document.getElementById('cc-rel').value,
+            date: getShiftInfo().display, story: document.getElementById('cc-story').value
+        };
+
+        let y = 15; doc.setFont("helvetica", "bold"); doc.setFontSize(16);
+        doc.text("Fiona Stanley Hospital", 105, y, {align:"center"});
+        y += 8; doc.setFontSize(13); doc.text("CARE Call Received Log", 105, y, {align:"center"});
+        y += 12; doc.setFontSize(10); doc.setLineWidth(0.2);
+
+        function drawRow(l, v) { doc.rect(14, y, 182, 9); doc.line(82, y, 82, y+9); doc.setFont("helvetica", "bold"); doc.text(l, 16, y+6); doc.setFont("helvetica", "normal"); doc.text(v || "", 84, y+6); y += 9; }
+        drawRow("Patient Surname", d.sur); drawRow("Patient Given Name", d.giv); drawRow("Ward", d.ward); drawRow("Bed Number", d.bed); drawRow("UMRN", d.urn); drawRow("Consultant", d.cons); drawRow("Team", d.team); drawRow("Caller", d.caller); drawRow("Relationship", d.rel); drawRow("Date Received", d.date);
+        y+=10; doc.setFont("helvetica", "bold"); doc.text("Details:", 14, y); y+=5;
+        const lines = doc.splitTextToSize(d.story, 180); doc.setFont("helvetica", "normal"); doc.text(lines, 14, y);
+        doc.save(`CARE_Log_${d.urn}.pdf`);
     }
 
     function copyToClipboard(id, btn) {
         const val = document.getElementById(id).value;
         if(!val) return;
         navigator.clipboard.writeText(val).then(() => {
-            let t = btn.innerText; btn.innerText="✓"; 
-            setTimeout(()=>{btn.innerText=t;}, 1000);
+            let t = btn.innerText; btn.innerText="✓"; btn.classList.add('copied');
+            setTimeout(()=>{btn.innerText=t; btn.classList.remove('copied');}, 1500);
         });
     }
 
-    function openEmail() { window.location.href = `mailto:${MET_EMAIL}?subject=CARE Log`; }
-    function launchRedcap(mode) { window.open(BASE_URL, '_blank'); }
+    function openEmail() { window.location.href = `mailto:${MET_EMAIL}?subject=CARE Call Log - ${getShiftInfo().display}`; }
+
+    function launchRedcap(mode) {
+        let p = []; const t = getShiftInfo();
+        p.push(`shift_date=${t.api}`); p.push(`shifttype=${t.code}`); p.push(`site=1`);
+        if(mode==='care'){ p.push(`alert_team=1`); p.push(`contactreason=5`); }
+        else if(mode==='met'){ p.push(`contactreason=1`); p.push(`alert_team=1`); p.push(`adds_score=9`); }
+        else if(mode==='rounding'){ p.push(`alert_team=2`); }
+        window.open(`${BASE_URL}&${p.join('&')}`, '_blank');
+    }
 </script>
 </body>
 </html>
