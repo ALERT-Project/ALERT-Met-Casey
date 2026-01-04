@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>ALERT REDCap and Care Call Log Tool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f0f9f9; --card: #ffffff; --ink: #111827; --muted: #6b7280; 
+      --accent: #007a7a; --accent-hover: #006262;
+      --red: #ef4444; --red-hover: #d32f2f;
+      --purple: #7e22ce; 
+      --line: #cbd5e1; --input-bg: #f8fbfb;
+      --success: #10b981;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      margin: 0; padding: 0;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+
+    header {
+      padding: 16px; border-bottom: 1px solid var(--line);
+      background: var(--card); text-align: center;
+      position: sticky; top: 0; z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    header h1 { font-size: 1.1rem; font-weight: 800; color: var(--accent); margin: 0; line-height: 1.4; }
+
+    .container {
+      max-width: 650px; margin: 0 auto; padding: 16px;
+      flex: 1; display: flex; flex-direction: column; gap: 20px;
+      width: 100%; box-sizing: border-box;
+    }
+
+    .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 20px;
+      display: flex; flex-direction: column; gap: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--muted); font-weight: 800; margin-top: 4px; margin-bottom: 4px; 
+      border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;
+    }
+
+    .input-row { display: flex; gap: 10px; align-items: flex-end; }
+    .input-wrapper { position: relative; flex: 1; }
+    
+    .input-wrapper input, .input-wrapper select, .input-wrapper textarea {
+      width: 100%; padding: 22px 12px 6px 12px;
+      border-radius: 8px; border: 2px solid var(--line);
+      background: var(--input-bg); color: var(--ink);
+      font-size: 1.1rem; outline: none; font-weight: 600;
+      box-sizing: border-box; font-family: inherit;
+      height: 60px;
+      transition: border-color 0.2s;
+    }
+    .input-wrapper input:focus, .input-wrapper select:focus, .input-wrapper textarea:focus {
+        border-color: var(--accent);
+        background: #fff;
+    }
+    
+    .input-wrapper select { appearance: none; background-color: var(--input-bg); }
+    
+    .input-wrapper textarea { 
+        min-height: 400px; 
+        padding-top: 12px; font-weight: 400; resize: vertical; line-height: 1.5;
+    }
+
+    .input-label {
+      position: absolute; top: 6px; left: 14px;
+      font-size: 0.7rem; color: var(--muted); font-weight: 700;
+      text-transform: uppercase; pointer-events: none; z-index: 2;
+    }
+
+    .checkbox-group {
+        display: flex; flex-direction: column; gap: 12px;
+        background: #f8fafc; padding: 16px; border-radius: 10px; border: 2px solid var(--line);
+    }
+    .cb-row { 
+        display: flex; align-items: flex-start;
+        gap: 12px; font-size: 1rem; font-weight: 600; line-height: 1.4;
+    }
+    .cb-row input { 
+        width: 24px; height: 24px; accent-color: var(--accent); 
+        flex-shrink: 0;
+        margin-top: 0px; 
+    }
+
+    .btn-copy-match {
+      width: 80px; height: 60px;
+      border: 2px solid var(--line); background-color: white;
+      color: var(--accent); border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer;
+      flex-shrink: 0; box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+    }
+    .btn-copy-match:active { transform: scale(0.96); background: #f0f9f9; }
+    .btn-copy-match.copied { background-color: var(--success); color: white; border-color: var(--success); }
+
+    .rc-copy-section {
+        display: flex; flex-direction: column; gap: 12px;
+        background: #fff5f5; padding: 16px; 
+        border-radius: 10px; border: 2px solid #fecaca;
+        margin-top: 8px;
+    }
+    .rc-header {
+        font-size: 0.75rem; color: var(--red); font-weight: 800; 
+        text-transform: uppercase; text-align: center; margin-bottom: 4px;
+    }
+    .rc-row {
+        display: flex; gap: 10px; align-items: stretch;
+    }
+    .rc-input-box {
+        flex: 1; background: white; border: 2px solid #fca5a5;
+        border-radius: 8px; padding: 0 12px; display: flex; align-items: center;
+        height: 55px;
+    }
+    .rc-input-box label {
+        font-size: 0.7rem; color: var(--red); font-weight: 700; margin-right: 10px; flex-shrink: 0;
+    }
+    .rc-input-box input {
+        border: none; background: transparent; width: 100%; height: 100%;
+        font-size: 1.1rem; font-weight: 700; color: var(--ink); padding: 0; outline: none;
+    }
+
+    .action-stack { display: flex; flex-direction: column; gap: 16px; }
+    .btn-launch {
+      display: flex; align-items: center; justify-content: center; width: 100%;
+      padding: 20px; border: none; border-radius: 12px; color: white;
+      cursor: pointer; font-size: 1.1rem; font-weight: 700; text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s;
+    }
+    .btn-launch:active { transform: scale(0.98); }
+    .btn-accent { background-color: var(--accent); }
+    .btn-red { background-color: var(--red); }
+    .btn-purple { background-color: var(--purple); }
+    .btn-blue { background-color: #2563eb; }
+    .btn-reset { 
+        background-color: transparent; 
+        color: var(--muted); 
+        border: 2px solid var(--line);
+        margin-top: 10px;
+    }
+
+    .hidden { display: none !important; }
+    .btn-back {
+        background: transparent; border: 2px solid var(--line);
+        padding: 10px 16px; border-radius: 8px; color: var(--ink);
+        font-weight: 700; cursor: pointer; margin-bottom: 12px; width: 100%; text-align: center;
+    }
+    #reader { width: 100%; border-radius: 12px; overflow: hidden; display: none; margin-bottom: 12px; background: #000; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ALERT <span style="color:var(--red)">REDCap and Care Call Log Tool</span></h1>
+  </header>
+
+  <div class="container">
+    
+    <div id="view-home">
+        <div class="card">
+            <div id="reader"></div>
+            <button id="btn-scan-toggle" class="btn-launch" style="background:#111827; gap:12px; margin-bottom: 10px;" onclick="toggleScanner()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/>
+                </svg>
+                <span id="scan-text">Live Camera Scan</span>
+            </button>
+
+            <input type="file" id="qr-input-file" accept="image/*" class="hidden">
+            <button class="btn-launch" style="background:#4b5563; gap:12px;" onclick="document.getElementById('qr-input-file').click()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+                </svg>
+                <span>Upload or Take Photo</span>
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="section-title">Patient Identification</div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">URN (UMRN)</label>
+                    <input type="text" id="urn-main" placeholder="Scan..." oninput="syncInputs()">
+                </div>
+                <button class="btn-copy-match" onclick="copyToClipboard('urn-main', this)">COPY</button>
+            </div>
+
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Visit Number</label>
+                    <input type="text" id="visit-main" placeholder="Scan..." oninput="syncInputs()">
+                </div>
+                <button class="btn-copy-match" onclick="copyToClipboard('visit-main', this)">COPY</button>
+            </div>
+        </div>
+
+        <div class="action-stack">
+            <button class="btn-launch btn-accent" onclick="launchRedcap('rounding')">Rounding RedCap</button>
+            <button class="btn-launch btn-red" onclick="launchRedcap('met')">MET Call Red
