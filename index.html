@@ -21,48 +21,154 @@
       --radius: 12px;
     }
 
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
-    header { padding: 16px; border-bottom: 1px solid var(--line); background: var(--card); text-align: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      margin: 0; padding: 0;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+
+    header {
+      padding: 16px; border-bottom: 1px solid var(--line);
+      background: var(--card); text-align: center;
+      position: sticky; top: 0; z-index: 10;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
     header h1 { font-size: 1.1rem; font-weight: 800; color: var(--accent); margin: 0; line-height: 1.4; }
 
-    .container { max-width: 650px; margin: 0 auto; padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 20px; width: 100%; box-sizing: border-box; }
-    .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-    .section-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-weight: 800; margin-top: 4px; margin-bottom: 4px; border-bottom: 2px solid #f1f5f9; padding-bottom: 6px; }
+    .container {
+      max-width: 650px; margin: 0 auto; padding: 16px;
+      flex: 1; display: flex; flex-direction: column; gap: 20px;
+      width: 100%; box-sizing: border-box;
+    }
 
+    .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 20px;
+      display: flex; flex-direction: column; gap: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--muted); font-weight: 800; margin-top: 4px; margin-bottom: 4px; 
+      border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;
+    }
+
+    /* INPUTS - BIGGER & CLEANER */
     .input-row { display: flex; gap: 10px; align-items: flex-end; }
     .input-wrapper { position: relative; flex: 1; }
-    .input-wrapper input, .input-wrapper select, .input-wrapper textarea { width: 100%; padding: 22px 12px 6px 12px; border-radius: 8px; border: 2px solid var(--line); background: var(--input-bg); color: var(--ink); font-size: 1.1rem; outline: none; font-weight: 600; box-sizing: border-box; font-family: inherit; height: 60px; transition: border-color 0.2s; }
-    .input-wrapper input:focus, .input-wrapper select:focus, .input-wrapper textarea:focus { border-color: var(--accent); background: #fff; }
+    
+    .input-wrapper input, .input-wrapper select, .input-wrapper textarea {
+      width: 100%; padding: 22px 12px 6px 12px; /* Pad top for label */
+      border-radius: 8px; border: 2px solid var(--line); /* Thicker border */
+      background: var(--input-bg); color: var(--ink);
+      font-size: 1.1rem; outline: none; font-weight: 600;
+      box-sizing: border-box; font-family: inherit;
+      height: 60px; /* Taller touch target */
+      transition: border-color 0.2s;
+    }
+    .input-wrapper input:focus, .input-wrapper select:focus, .input-wrapper textarea:focus {
+        border-color: var(--accent);
+        background: #fff;
+    }
+    
     .input-wrapper select { appearance: none; background-color: var(--input-bg); }
-    .input-wrapper textarea { min-height: 400px; padding-top: 12px; font-weight: 400; resize: vertical; line-height: 1.5; }
-    .input-label { position: absolute; top: 6px; left: 14px; font-size: 0.7rem; color: var(--muted); font-weight: 700; text-transform: uppercase; pointer-events: none; z-index: 2; }
+    
+    .input-wrapper textarea { 
+        min-height: 400px; 
+        padding-top: 12px; font-weight: 400; resize: vertical; line-height: 1.5;
+    }
 
-    .checkbox-group { display: flex; flex-direction: column; gap: 12px; background: #f8fafc; padding: 16px; border-radius: 10px; border: 2px solid var(--line); }
-    .cb-row { display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; font-weight: 600; line-height: 1.4; }
-    .cb-row input { width: 24px; height: 24px; accent-color: var(--accent); flex-shrink: 0; }
+    .input-label {
+      position: absolute; top: 6px; left: 14px;
+      font-size: 0.7rem; color: var(--muted); font-weight: 700;
+      text-transform: uppercase; pointer-events: none; z-index: 2;
+    }
 
-    .btn-copy-match { width: 80px; height: 60px; border: 2px solid var(--line); background-color: white; color: var(--accent); border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; flex-shrink: 0; }
+    /* CHECKBOXES - FIXED ALIGNMENT */
+    .checkbox-group {
+        display: flex; flex-direction: column; gap: 12px;
+        background: #f8fafc; padding: 16px; border-radius: 10px; border: 2px solid var(--line);
+    }
+    .cb-row { 
+        display: flex; align-items: flex-start; /* Aligns top if text wraps */
+        gap: 12px; font-size: 1rem; font-weight: 600; line-height: 1.4;
+    }
+    .cb-row input { 
+        width: 24px; height: 24px; accent-color: var(--accent); 
+        flex-shrink: 0; /* Prevents squishing */
+        margin-top: 0px; 
+    }
+
+    /* BUTTONS */
+    .btn-copy-match {
+      width: 80px; height: 60px; /* Match input height */
+      border: 2px solid var(--line); background-color: white;
+      color: var(--accent); border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer;
+      flex-shrink: 0; box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+    }
+    .btn-copy-match:active { transform: scale(0.96); background: #f0f9f9; }
     .btn-copy-match.copied { background-color: var(--success); color: white; border-color: var(--success); }
 
+    /* REDCAP QUICK COPY SECTION - STACKED FOR MOBILE */
+    .rc-copy-section {
+        display: flex; flex-direction: column; gap: 12px;
+        background: #fff5f5; padding: 16px; 
+        border-radius: 10px; border: 2px solid #fecaca;
+        margin-top: 8px;
+    }
+    .rc-header {
+        font-size: 0.75rem; color: var(--red); font-weight: 800; 
+        text-transform: uppercase; text-align: center; margin-bottom: 4px;
+    }
+    .rc-row {
+        display: flex; gap: 10px; align-items: stretch;
+    }
+    .rc-input-box {
+        flex: 1; background: white; border: 2px solid #fca5a5;
+        border-radius: 8px; padding: 0 12px; display: flex; align-items: center;
+        height: 55px;
+    }
+    .rc-input-box label {
+        font-size: 0.7rem; color: var(--red); font-weight: 700; margin-right: 10px; flex-shrink: 0;
+    }
+    .rc-input-box input {
+        border: none; background: transparent; width: 100%; height: 100%;
+        font-size: 1.1rem; font-weight: 700; color: var(--ink); padding: 0; outline: none;
+    }
+
+    /* LAUNCH BUTTONS */
     .action-stack { display: flex; flex-direction: column; gap: 16px; }
-    .btn-launch { display: flex; align-items: center; justify-content: center; width: 100%; padding: 20px; border: none; border-radius: 12px; color: white; cursor: pointer; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s; }
+    .btn-launch {
+      display: flex; align-items: center; justify-content: center; width: 100%;
+      padding: 20px; border: none; border-radius: 12px; color: white;
+      cursor: pointer; font-size: 1.1rem; font-weight: 700; text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s;
+    }
     .btn-launch:active { transform: scale(0.98); }
     .btn-accent { background-color: var(--accent); }
     .btn-red { background-color: var(--red); }
     .btn-purple { background-color: var(--purple); }
     .btn-blue { background-color: #2563eb; }
-    .btn-reset { background-color: transparent; color: var(--muted); border: 2px solid var(--line); margin-top: 10px; }
-
-    .hidden { display: none !important; }
-    .btn-back { background: transparent; border: 2px solid var(--line); padding: 10px 16px; border-radius: 8px; color: var(--ink); font-weight: 700; cursor: pointer; margin-bottom: 12px; width: 100%; text-align: center; }
-    #reader { width: 100%; border-radius: 12px; overflow: hidden; display: none; margin-bottom: 12px; background: #000; }
     
-    .rc-copy-section { display: flex; flex-direction: column; gap: 12px; background: #fff5f5; padding: 16px; border-radius: 10px; border: 2px solid #fecaca; margin-top: 8px; }
-    .rc-header { font-size: 0.75rem; color: var(--red); font-weight: 800; text-transform: uppercase; text-align: center; margin-bottom: 4px; }
-    .rc-row { display: flex; gap: 10px; align-items: stretch; }
-    .rc-input-box { flex: 1; background: white; border: 2px solid #fca5a5; border-radius: 8px; padding: 0 12px; display: flex; align-items: center; height: 55px; }
-    .rc-input-box label { font-size: 0.7rem; color: var(--red); font-weight: 700; margin-right: 10px; flex-shrink: 0; }
-    .rc-input-box input { border: none; background: transparent; width: 100%; height: 100%; font-size: 1.1rem; font-weight: 700; color: var(--ink); padding: 0; outline: none; }
+    /* New Reset Button Style */
+    .btn-reset { 
+        background-color: transparent; 
+        color: var(--muted); 
+        border: 2px solid var(--line); 
+        margin-top: 10px;
+    }
+
+    /* UTILS */
+    .hidden { display: none !important; }
+    .btn-back {
+        background: transparent; border: 2px solid var(--line);
+        padding: 10px 16px; border-radius: 8px; color: var(--ink);
+        font-weight: 700; cursor: pointer; margin-bottom: 12px; width: 100%; text-align: center;
+    }
+    #reader { width: 100%; border-radius: 12px; overflow: hidden; display: none; margin-bottom: 12px; background: #000; }
   </style>
 </head>
 <body>
@@ -72,25 +178,44 @@
   </header>
 
   <div class="container">
+    
     <div id="view-home">
         <div class="card">
             <div id="reader"></div>
-            <button id="btn-scan-toggle" class="btn-launch" style="background:#111827; gap:12px; margin-bottom: 10px;" onclick="toggleScanner()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg>
-                <span id="scan-text">Scan from Sticker QR Code</span>
+            <button id="btn-scan-toggle" class="btn-launch" style="background:#111827; gap:12px; margin-bottom:10px;" onclick="toggleScanner()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/>
+                </svg>
+                <span id="scan-text">Scan QR code on sticker</span>
             </button>
 
             <input type="file" id="qr-input-file" accept="image/*" class="hidden">
             <button class="btn-launch" style="background:#4b5563; gap:12px;" onclick="document.getElementById('qr-input-file').click()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+                </svg>
                 <span>Upload or Take Photo</span>
             </button>
         </div>
 
         <div class="card">
             <div class="section-title">Patient Identification</div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">URN (UMRN)</label><input type="text" id="urn-main" placeholder="Waiting..." oninput="syncInputs()"></div><button class="btn-copy-match" onclick="copyToClipboard('urn-main', this)">COPY</button></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Visit Number</label><input type="text" id="visit-main" placeholder="Waiting..." oninput="syncInputs()"></div><button class="btn-copy-match" onclick="copyToClipboard('visit-main', this)">COPY</button></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">URN (UMRN)</label>
+                    <input type="text" id="urn-main" placeholder="Scan..." oninput="syncInputs()">
+                </div>
+                <button class="btn-copy-match" onclick="copyToClipboard('urn-main', this)">COPY</button>
+            </div>
+
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Visit Number</label>
+                    <input type="text" id="visit-main" placeholder="Scan..." oninput="syncInputs()">
+                </div>
+                <button class="btn-copy-match" onclick="copyToClipboard('visit-main', this)">COPY</button>
+            </div>
         </div>
 
         <div class="action-stack">
@@ -102,51 +227,169 @@
 
     <div id="view-care-log" class="hidden">
         <button class="btn-back" onclick="showHome()">← Back to Home</button>
+
         <div class="card">
             <div class="section-title">Log Entry Details</div>
+            
             <div class="input-row"><div class="input-wrapper"><label class="input-label">Patient Surname</label><input type="text" id="cc-surname"></div></div>
             <div class="input-row"><div class="input-wrapper"><label class="input-label">Patient Given Name</label><input type="text" id="cc-given"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Ward</label><select id="cc-location"><option value="">Select Ward...</option></select></div></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Ward</label>
+                    <select id="cc-location">
+                        <option value="">Select Ward...</option>
+                        </select>
+                </div>
+            </div>
+            
             <div class="input-row"><div class="input-wrapper"><label class="input-label">Bed Number</label><input type="text" id="cc-bed"></div></div>
             <div class="input-row"><div class="input-wrapper"><label class="input-label">UMRN</label><input type="text" id="cc-urn"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Current Inpatient</label><select id="cc-inpatient"><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Current Inpatient</label>
+                    <select id="cc-inpatient"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+            </div>
+
             <div class="input-row"><div class="input-wrapper"><label class="input-label">Consultant Name</label><input type="text" id="cc-consultant"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Team (Specialty)</label><select id="cc-team"><option value="">Select Team...</option></select></div></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Team (Specialty)</label>
+                    <select id="cc-team">
+                        <option value="">Select Team...</option>
+                        <option value="1">Acute Surgical Unit (ASU)</option>
+                        <option value="2">Advanced Heart Failure and Transplant (AHFT)</option>
+                        <option value="3">Advanced Lung (ALDU)</option>
+                        <option value="4">Anaesthesia and Pain medicine</option>
+                        <option value="5">Breast service</option>
+                        <option value="6">Burns</option>
+                        <option value="7">Cardiology services</option>
+                        <option value="8">Cardiothoracics</option>
+                        <option value="9">Colorectal</option>
+                        <option value="10">Covid Respiratory</option>
+                        <option value="11">Dentistry/Dental</option>
+                        <option value="12">Dermatology</option>
+                        <option value="13">Ear Nose and Throat</option>
+                        <option value="14">Emergency medicine / ED / AECC</option>
+                        <option value="15">Endocrinology and Diabeties</option>
+                        <option value="16">Gastroenterology</option>
+                        <option value="17">General medicine / AMU</option>
+                        <option value="18">General surgery</option>
+                        <option value="19">Geriatric medicine (Geri's)</option>
+                        <option value="20">Gynaecological oncology</option>
+                        <option value="21">Gynaecology</option>
+                        <option value="22">Haematology</option>
+                        <option value="23">Hyperbaric medicine</option>
+                        <option value="24">Immunology and allergy (clinical)</option>
+                        <option value="25">Infectious diseases (ID)</option>
+                        <option value="26">Intensive care medicine</option>
+                        <option value="27">Maternal-fetal medicine</option>
+                        <option value="28">MDFU (Multi-disciplinary Foot)</option>
+                        <option value="29">Medical oncology</option>
+                        <option value="30">Microbiolology</option>
+                        <option value="31">Neonatal or perinatal medicine</option>
+                        <option value="32">Nephrology and Dialysis</option>
+                        <option value="33">Neurology</option>
+                        <option value="34">Neurosurgery</option>
+                        <option value="35">Nuclear medicine</option>
+                        <option value="36">Nuclear medicine</option>
+                        <option value="37">Obstetrics</option>
+                        <option value="38">Oncology (Medical Oncology)</option>
+                        <option value="39">Operating Theatres</option>
+                        <option value="40">Ophthalmology</option>
+                        <option value="41">Oral and maxillofacial surgery</option>
+                        <option value="42">Orthopaedic surgery</option>
+                        <option value="43">Paediatric surgery</option>
+                        <option value="44">Paediatrics (general)</option>
+                        <option value="45">Pathology</option>
+                        <option value="46">Plastic and reconstructive surgery (plastics)</option>
+                        <option value="47">Psychiatry</option>
+                        <option value="48">Psychiatry - Child</option>
+                        <option value="49">Psychogeriatrics</option>
+                        <option value="50">Radiation Oncology (Rad Onc)</option>
+                        <option value="51">Radiology and Medical Imaging</option>
+                        <option value="52">Radiotherapy</option>
+                        <option value="53">Rehabilitation medicine (Rehab)</option>
+                        <option value="54">Renal</option>
+                        <option value="55">Respiratory and sleep medicine</option>
+                        <option value="56">Rheumatology</option>
+                        <option value="57">Spinal</option>
+                        <option value="58">Upper GI</option>
+                        <option value="59">Urogynaecology</option>
+                        <option value="60">Urology</option>
+                        <option value="61">Vascular Surgery</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="input-row"><div class="input-wrapper"><label class="input-label">Caller's Name</label><input type="text" id="cc-caller"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Relationship to Patient</label><input type="text" id="cc-rel"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Consent for Follow-up</label><select id="cc-consent"><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Caller's Relationship to Patient</label><input type="text" id="cc-rel"></div></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Consent for Follow-up Contact</label>
+                    <select id="cc-consent"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+            </div>
+
             <div class="checkbox-group">
                 <div style="font-size:0.8rem; color:var(--muted); font-weight:800; margin-bottom:6px;">TYPE (Select all that apply)</div>
                 <label class="cb-row"><input type="checkbox" id="cc-type-phys"> Physical / Mental State Deterioration</label>
                 <label class="cb-row"><input type="checkbox" id="cc-type-comm"> Communication Issues</label>
                 <label class="cb-row"><input type="checkbox" id="cc-type-comp"> Complaint</label>
             </div>
+
             <div class="section-title">Details</div>
-            <div class="input-wrapper"><textarea id="cc-story" placeholder="Full narrative / details..."></textarea></div>
-            <div class="checkbox-group"><label class="cb-row"><input type="checkbox" id="cc-digital" checked> Digital Medical Record Completed</label></div>
+            <div class="input-wrapper">
+                <textarea id="cc-story" placeholder="Full narrative / details..."></textarea>
+            </div>
+
+            <div class="checkbox-group">
+                 <label class="cb-row">
+                    <input type="checkbox" id="cc-digital" checked> Digital Medical Record Completed
+                 </label>
+            </div>
         </div>
 
         <div class="action-stack">
             <button class="btn-launch btn-accent" onclick="generatePDF()">1. Save PDF Log</button>
             <button class="btn-launch btn-blue" onclick="openEmail()">2. Open Email</button>
-            <button class="btn-launch btn-red" onclick="launchRedcap('care')">3. Launch Care Call RedCap</button>
+            <button class="btn-launch btn-red" style="border:2px solid white; box-shadow:0 4px 10px rgba(239,68,68,0.4);" onclick="launchRedcap('care')">3. Launch Care Call RedCap</button>
+            
             <div class="rc-copy-section">
                 <div class="rc-header">REDCap Handy Data</div>
-                <div class="rc-row"><div class="rc-input-box"><label>URN</label><input type="text" id="mini-urn" readonly></div><button class="btn-copy-match" onclick="copyToClipboard('mini-urn', this)">COPY</button></div>
-                <div class="rc-row"><div class="rc-input-box"><label>VISIT</label><input type="text" id="mini-visit" readonly></div><button class="btn-copy-match" onclick="copyToClipboard('mini-visit', this)">COPY</button></div>
+                
+                <div class="rc-row">
+                    <div class="rc-input-box">
+                        <label>URN</label>
+                        <input type="text" id="mini-urn" readonly>
+                    </div>
+                    <button class="btn-copy-match" onclick="copyToClipboard('mini-urn', this)">COPY</button>
+                </div>
+
+                <div class="rc-row">
+                    <div class="rc-input-box">
+                        <label>VISIT</label>
+                        <input type="text" id="mini-visit" readonly>
+                    </div>
+                    <button class="btn-copy-match" onclick="copyToClipboard('mini-visit', this)">COPY</button>
+                </div>
             </div>
+
             <button class="btn-launch btn-reset" onclick="resetAllFields()">Reset All Fields</button>
         </div>
         <div style="height:40px;"></div>
     </div>
+    
     <div id="status" style="text-align:center; color:gray; font-size:0.8rem; margin:10px;"></div>
   </div>
 
 <script>
     const BASE_URL = "https://datalibrary-rc.health.wa.gov.au/surveys/?s=K3WAPC4KKXWNTF3F";
     const MET_EMAIL = "fshsqr.MET@health.wa.gov.au";
-    
-    // RESTORED FULL LISTS
     const LOCATIONS = [
         {v:1, t:"3A"}, {v:2, t:"3B"}, {v:3, t:"3DMFAU"}, {v:4, t:"Birth Suite"}, {v:5, t:"3C"},
         {v:6, t:"4A"}, {v:7, t:"4B"}, {v:8, t:"4C"}, {v:9, t:"4D"}, {v:10, t:"5A"},
@@ -164,28 +407,63 @@
         {v:58, t:"SRS 1A"}, {v:59, t:"SRS 2A"}, {v:60, t:"SRS A"}, {v:61, t:"SRS B"},
         {v:62, t:"SRS Pool"}, {v:63, t:"SRS Gym"}, {v:64, t:"Transit Lounge"}
     ];
-    const TEAMS = [
-        {v:"1", t:"ASU"}, {v:"2", t:"AHFT"}, {v:"3", t:"ALDU"}, {v:"4", t:"Anaesthesia"}, {v:"5", t:"Breast"}, {v:"6", t:"Burns"}, {v:"7", t:"Cardiology"}, {v:"8", t:"Cardiothoracics"}, {v:"9", t:"Colorectal"}, {v:"10", t:"Covid Respiratory"}, {v:"11", t:"Dental"}, {v:"12", t:"Dermatology"}, {v:"13", t:"ENT"}, {v:"14", t:"ED"}, {v:"15", t:"Endo/Diabetes"}, {v:"16", t:"Gastro"}, {v:"17", t:"Gen Med"}, {v:"18", t:"Gen Surg"}, {v:"19", t:"Geriatrics"}, {v:"20", t:"Gyn Onc"}, {v:"21", t:"Gyn"}, {v:"22", t:"Haematology"}, {v:"23", t:"Hyperbaric"}, {v:"24", t:"Immunology"}, {v:"25", t:"ID"}, {v:"26", t:"ICU"}, {v:"27", t:"Maternal-fetal"}, {v:"28", t:"MDFU"}, {v:"29", t:"Med Oncology"}, {v:"30", t:"Micro"}, {v:"31", t:"Neonatal"}, {v:"32", t:"Nephrology"}, {v:"33", t:"Neurology"}, {v:"34", t:"Neurosurgery"}, {v:"35", t:"Nuclear Med"}, {v:"37", t:"Obstetrics"}, {v:"39", t:"Theatre"}, {v:"40", t:"Ophthalmology"}, {v:"41", t:"Maxillofacial"}, {v:"42", t:"Orthopaedics"}, {v:"43", t:"Paeds Surg"}, {v:"44", t:"Paeds"}, {v:"45", t:"Pathology"}, {v:"46", t:"Plastics"}, {v:"47", t:"Psychiatry"}, {v:"49", t:"Psychogeri"}, {v:"50", t:"Rad Onc"}, {v:"51", t:"Radiology"}, {v:"52", t:"Radiotherapy"}, {v:"53", t:"Rehab"}, {v:"54", t:"Renal"}, {v:"55", t:"Respiratory"}, {v:"56", t:"Rheum"}, {v:"57", t:"Spinal"}, {v:"58", t:"Upper GI"}, {v:"59", t:"Urogyn"}, {v:"60", t:"Urology"}, {v:"61", t:"Vascular"}
-    ];
 
     const locSelect = document.getElementById('cc-location');
-    LOCATIONS.forEach(l => { let opt = document.createElement('option'); opt.value = l.v; opt.text = l.t; locSelect.add(opt); });
-    const teamSelect = document.getElementById('cc-team');
-    TEAMS.forEach(t => { let opt = document.createElement('option'); opt.value = t.v; opt.text = t.t; teamSelect.add(opt); });
+    LOCATIONS.forEach(l => {
+        let opt = document.createElement('option');
+        opt.value = l.v; opt.text = l.t; locSelect.add(opt);
+    });
 
+    function showCareLog() {
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-care-log').classList.remove('hidden');
+        syncInputs();
+        window.scrollTo(0,0);
+    }
+    function showHome() {
+        document.getElementById('view-home').classList.remove('hidden');
+        document.getElementById('view-care-log').classList.add('hidden');
+    }
     function syncInputs() {
         const u = document.getElementById('urn-main').value;
         const v = document.getElementById('visit-main').value;
-        if(u) { document.getElementById('cc-urn').value = u; document.getElementById('mini-urn').value = u; }
-        if(v) { document.getElementById('mini-visit').value = v; }
+        if(u) {
+            document.getElementById('cc-urn').value = u;
+            document.getElementById('mini-urn').value = u;
+        }
+        if(v) {
+            document.getElementById('mini-visit').value = v;
+        }
     }
 
+    // NEW: Reset Function
     function resetAllFields() {
-        if (confirm("Clear all patient data?")) {
-            document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = "");
-            document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
-            document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+        if (confirm("Are you sure you want to clear all data? This cannot be undone.")) {
+            // Main inputs
+            document.getElementById('urn-main').value = "";
+            document.getElementById('visit-main').value = "";
+            
+            // Care log inputs
+            const fields = [
+                'cc-surname', 'cc-given', 'cc-bed', 'cc-urn', 
+                'cc-consultant', 'cc-caller', 'cc-rel', 'cc-story',
+                'mini-urn', 'mini-visit'
+            ];
+            fields.forEach(f => document.getElementById(f).value = "");
+            
+            // Selects
+            document.getElementById('cc-location').value = "";
+            document.getElementById('cc-team').value = "";
+            document.getElementById('cc-inpatient').value = "Yes";
+            document.getElementById('cc-consent').value = "Yes";
+            
+            // Checkboxes
+            document.getElementById('cc-type-phys').checked = false;
+            document.getElementById('cc-type-comm').checked = false;
+            document.getElementById('cc-type-comp').checked = false;
             document.getElementById('cc-digital').checked = true;
+            
+            alert("Form cleared.");
             showHome();
         }
     }
@@ -203,73 +481,204 @@
 
     let scanner=null; let isScanning=false;
     function toggleScanner(){ if(isScanning) stopScan(); else startScan(); }
+    
     function startScan(){
         document.getElementById('reader').style.display='block';
         document.getElementById('scan-text').innerText="STOP CAMERA";
         isScanning=true;
         if(!scanner) scanner = new Html5Qrcode("reader");
-        scanner.start({facingMode:"environment"}, {fps:15, qrbox:250}, (txt)=>{ processQrResult(txt); stopScan(); })
-        .catch(()=>{ alert("Camera error."); stopScan(); });
+        scanner.start({facingMode:"environment"}, {fps:10, qrbox:250}, (txt)=>{
+            processQrResult(txt); // Updated to use centralized processor
+            stopScan();
+        }).catch(()=>{ alert("Camera error"); stopScan(); });
     }
+    
     function stopScan(){
         if(scanner) scanner.stop().then(()=>{
             document.getElementById('reader').style.display='none';
-            document.getElementById('scan-text').innerText="Scan from Sticker QR Code";
+            document.getElementById('scan-text').innerText="Scan QR code on sticker";
             isScanning=false;
         });
     }
 
-    document.getElementById('qr-input-file').addEventListener('change', e => {
+    // NEW: File Upload Listener for "Upload or Take Photo"
+    const fileinput = document.getElementById('qr-input-file');
+    fileinput.addEventListener('change', e => {
         if (e.target.files.length === 0) return;
-        if (!scanner) scanner = new Html5Qrcode("reader");
-        scanner.scanFile(e.target.files[0], true).then(txt => { processQrResult(txt); alert("QR Code Found!"); })
-        .catch(err => { alert("No QR code detected. Try a clearer photo."); });
+        const imageFile = e.target.files[0];
+
+        // Initialize scanner if needed
+        if (!scanner) {
+            scanner = new Html5Qrcode("reader");
+        }
+        
+        // Scan the file
+        scanner.scanFile(imageFile, true)
+            .then(txt => {
+                processQrResult(txt);
+                alert("QR Code Detected Successfully!");
+            })
+            .catch(err => {
+                console.error("Error scanning file", err);
+                alert("Could not find a QR code in that photo. Try taking it from 20-30cm away.");
+            });
     });
 
-    // JSON-Aware Processing
+    // NEW: Centralized QR Processing (Handles JSON format)
     function processQrResult(txt) {
         try {
+            // Try to parse as JSON (FSH Sticker Format)
             const data = JSON.parse(txt);
             if (data.u) document.getElementById('urn-main').value = data.u.toUpperCase();
             if (data.e) document.getElementById('visit-main').value = data.e;
         } catch (e) {
-            const urnMatch = txt.match(/([A-Z]\d{7})/i);
-            const visitMatch = txt.match(/\b\d{8,11}\b/);
-            if(urnMatch) document.getElementById('urn-main').value = urnMatch[1].toUpperCase();
-            if(visitMatch) document.getElementById('visit-main').value = visitMatch[0];
+            // Fallback for standard QR codes
+            const u = txt.match(/([A-Z]\d{7})/i);
+            const v = txt.match(/(\d{8})/);
+            if(u) document.getElementById('urn-main').value = u[1].toUpperCase();
+            if(v) document.getElementById('visit-main').value = v[1];
         }
+        
         syncInputs();
-        navigator.vibrate?.(200);
+        if(navigator.vibrate) navigator.vibrate(200);
     }
 
-    function showCareLog() { document.getElementById('view-home').classList.add('hidden'); document.getElementById('view-care-log').classList.remove('hidden'); syncInputs(); window.scrollTo(0,0); }
-    function showHome() { document.getElementById('view-home').classList.remove('hidden'); document.getElementById('view-care-log').classList.add('hidden'); }
-
     async function generatePDF() {
-        const { jsPDF } = window.jspdf; const doc = new jsPDF();
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
         const loc = document.getElementById('cc-location');
         const wardTxt = loc.options[loc.selectedIndex].text === "Select Ward..." ? "" : loc.options[loc.selectedIndex].text;
+        
         const teamSel = document.getElementById('cc-team');
         const teamTxt = teamSel.options[teamSel.selectedIndex].text === "Select Team..." ? "" : teamSel.options[teamSel.selectedIndex].text;
         
         const d = {
-            sur: document.getElementById('cc-surname').value, giv: document.getElementById('cc-given').value,
-            ward: wardTxt, bed: document.getElementById('cc-bed').value, urn: document.getElementById('cc-urn').value,
-            inpt: document.getElementById('cc-inpatient').value, cons: document.getElementById('cc-consultant').value,
-            team: teamTxt, caller: document.getElementById('cc-caller').value, rel: document.getElementById('cc-rel').value,
-            date: getShiftInfo().display, story: document.getElementById('cc-story').value
+            sur: document.getElementById('cc-surname').value,
+            giv: document.getElementById('cc-given').value,
+            ward: wardTxt,
+            bed: document.getElementById('cc-bed').value,
+            urn: document.getElementById('cc-urn').value,
+            inpt: document.getElementById('cc-inpatient').value,
+            cons: document.getElementById('cc-consultant').value,
+            team: teamTxt,
+            caller: document.getElementById('cc-caller').value,
+            rel: document.getElementById('cc-rel').value,
+            date: getShiftInfo().display,
+            consent: document.getElementById('cc-consent').value,
+            story: document.getElementById('cc-story').value,
+            digi: document.getElementById('cc-digital').checked ? "YES" : "NO",
+            phys: document.getElementById('cc-type-phys').checked ? "YES" : "NO",
+            comm: document.getElementById('cc-type-comm').checked ? "YES" : "NO",
+            comp: document.getElementById('cc-type-comp').checked ? "YES" : "NO"
         };
 
-        let y = 15; doc.setFont("helvetica", "bold"); doc.setFontSize(16);
-        doc.text("Fiona Stanley Hospital", 105, y, {align:"center"});
-        y += 8; doc.setFontSize(13); doc.text("CARE Call Received Log", 105, y, {align:"center"});
-        y += 12; doc.setFontSize(10); doc.setLineWidth(0.2);
+        const margin = 14; 
+        const pageW = 210; 
+        const tableW = 182; 
+        const col1 = 70;
+        let y = 15;
+        const rowH = 9;
 
-        function drawRow(l, v) { doc.rect(14, y, 182, 9); doc.line(82, y, 82, y+9); doc.setFont("helvetica", "bold"); doc.text(l, 16, y+6); doc.setFont("helvetica", "normal"); doc.text(v || "", 84, y+6); y += 9; }
-        drawRow("Patient Surname", d.sur); drawRow("Patient Given Name", d.giv); drawRow("Ward", d.ward); drawRow("Bed Number", d.bed); drawRow("UMRN", d.urn); drawRow("Consultant", d.cons); drawRow("Team", d.team); drawRow("Caller", d.caller); drawRow("Relationship", d.rel); drawRow("Date Received", d.date);
-        y+=10; doc.setFont("helvetica", "bold"); doc.text("Details:", 14, y); y+=5;
-        const lines = doc.splitTextToSize(d.story, 180); doc.setFont("helvetica", "normal"); doc.text(lines, 14, y);
-        doc.save(`CARE_Log_${d.urn}.pdf`);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(16);
+        doc.text("Fiona Stanley Hospital", pageW/2, y, {align:"center"});
+        y += 8;
+        doc.setFontSize(13);
+        doc.text("Patient Carer Activated Escalation (CARE) call received log", pageW/2, y, {align:"center"});
+        y += 12;
+
+        doc.setLineWidth(0.2);
+        doc.setFontSize(10);
+
+        function drawRow(label, val) {
+            doc.rect(margin, y, tableW, rowH);
+            doc.line(margin+col1-2, y, margin+col1-2, y+rowH);
+            doc.setFont("helvetica", "bold");
+            doc.text(label, margin+2, y+6);
+            doc.setFont("helvetica", "normal");
+            doc.text(val || "", margin+col1, y+6);
+            y += rowH;
+        }
+
+        drawRow("Patient Surname", d.sur);
+        drawRow("Patient Given Name", d.giv);
+        drawRow("Ward", d.ward);
+        drawRow("Bed Number", d.bed);
+        drawRow("UMRN", d.urn);
+        drawRow("Current Inpatient", d.inpt);
+        drawRow("Consultant Name", d.cons);
+        drawRow("Team", d.team);
+        drawRow("Caller's Name", d.caller);
+        drawRow("Caller's Relationship to Patient", d.rel);
+        drawRow("Date Call Received", d.date);
+        drawRow("Consent for Follow-up Contact", d.consent);
+
+        // Checklist
+        const checkH = 22;
+        doc.rect(margin, y, tableW, checkH);
+        doc.line(margin+col1-2, y, margin+col1-2, y+checkH);
+        doc.setFont("helvetica", "bold");
+        doc.text("Physical / Mental State Deterioration", margin+2, y+6);
+        doc.text("Communication Issues", margin+2, y+12);
+        doc.text("Complaint", margin+2, y+18);
+        doc.setFont("helvetica", "normal");
+        const yesNoX = margin + col1;
+        doc.text(d.phys, yesNoX, y+6);
+        doc.text(d.comm, yesNoX, y+12);
+        doc.text(d.comp, yesNoX, y+18);
+        y += checkH;
+
+        y+=5;
+        doc.setFont("helvetica", "bold");
+        doc.text("Details", margin, y);
+        y+=2;
+
+        // Smart Box Logic
+        const lines = doc.splitTextToSize(d.story, tableW-4);
+        const lineHeight = 5;
+        let startBoxY = y;
+        doc.line(margin, y, margin + tableW, y);
+
+        for(let i=0; i<lines.length; i++){
+            // Page Break Check
+            if(y > 275) {
+                 doc.line(margin, startBoxY, margin, y + lineHeight);
+                 doc.line(margin+tableW, startBoxY, margin+tableW, y + lineHeight);
+                 doc.line(margin, y + lineHeight, margin+tableW, y + lineHeight);
+                 
+                 doc.addPage();
+                 y = 20; 
+                 startBoxY = y;
+                 doc.line(margin, y, margin+tableW, y); 
+            }
+            doc.setFont("helvetica", "normal");
+            doc.text(lines[i], margin+2, y+5);
+            y += lineHeight;
+        }
+
+        if(y - startBoxY < 50 && lines.length < 15) {
+             y = startBoxY + 50; 
+        }
+
+        doc.line(margin, startBoxY, margin, y);
+        doc.line(margin+tableW, startBoxY, margin+tableW, y);
+        doc.line(margin, y, margin+tableW, y);
+
+        if(y > 270) { doc.addPage(); y = 20; }
+
+        doc.rect(margin, y, tableW, rowH);
+        doc.line(margin+col1-2, y, margin+col1-2, y+rowH);
+        doc.setFont("helvetica", "bold");
+        doc.text("Digital Medical Record Completed", margin+2, y+6);
+        doc.setFont("helvetica", "normal");
+        doc.text(d.digi, margin+col1, y+6);
+        
+        y += 15;
+        doc.setFontSize(9);
+        doc.text("Please return completed forms to  " + MET_EMAIL, pageW/2, y, {align:"center"});
+
+        doc.save(`CARE_Call_Log_${d.urn}.pdf`);
     }
 
     function copyToClipboard(id, btn) {
@@ -281,14 +690,33 @@
         });
     }
 
-    function openEmail() { window.location.href = `mailto:${MET_EMAIL}?subject=CARE Call Log - ${getShiftInfo().display}`; }
+    function openEmail() {
+        const date = getShiftInfo().display;
+        const body = `Dear ALERT Admin Team,\n\nPlease find Care Call Log attached from ${date}.\n\nBest regards,`;
+        window.location.href = `mailto:${MET_EMAIL}?subject=CARE Call Log - ${date}&body=${encodeURIComponent(body)}`;
+    }
 
     function launchRedcap(mode) {
-        let p = []; const t = getShiftInfo();
+        let p = [];
+        const t = getShiftInfo();
         p.push(`shift_date=${t.api}`); p.push(`shifttype=${t.code}`); p.push(`site=1`);
-        if(mode==='care'){ p.push(`alert_team=1`); p.push(`contactreason=5`); }
-        else if(mode==='met'){ p.push(`contactreason=1`); p.push(`alert_team=1`); p.push(`adds_score=9`); }
-        else if(mode==='rounding'){ p.push(`alert_team=2`); }
+        
+        if(mode==='care'){
+            p.push(`alert_team=1`); p.push(`contactreason=5`); p.push(`int_group_a___5=1`);
+            const locVal = document.getElementById('cc-location').value;
+            if(locVal) p.push(`location_fs=${locVal}`);
+            const teamVal = document.getElementById('cc-team').value;
+            if(teamVal) p.push(`specialty=${teamVal}`);
+        } else if(mode==='met'){
+            p.push(`contactreason=1`); p.push(`alert_team=1`); p.push(`adds_score=9`);
+            p.push(`met_call_hoot=1`); p.push(`outcome=3`); p.push(`int_group_e___41=1`);
+            ["6","8","9","10"].forEach(x=>p.push(`int_group_a___${x}=1`));
+            ["11","16","19"].forEach(x=>p.push(`int_group_b___${x}=1`));
+            p.push(`int_group_c___25=1`); p.push(`bgl_ketones_detail=BGL`);
+        } else if(mode==='rounding'){
+            p.push(`alert_team=2`); p.push(`int_group_a___8=1`); 
+            p.push(`int_group_b___19=1`); p.push(`int_group_c___25=1`);
+        }
         window.open(`${BASE_URL}&${p.join('&')}`, '_blank');
     }
 </script>
