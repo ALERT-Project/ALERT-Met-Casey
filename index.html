@@ -148,10 +148,8 @@
     .btn-purple { background-color: var(--purple); }
     .btn-blue { background-color: #2563eb; }
     .btn-reset { 
-        background-color: transparent; 
-        color: var(--muted); 
-        border: 2px solid var(--line);
-        margin-top: 10px;
+        background-color: transparent; color: var(--muted); 
+        border: 2px solid var(--line); margin-top: 10px;
     }
 
     .hidden { display: none !important; }
@@ -178,7 +176,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/>
                 </svg>
-                <span id="scan-text">Live Camera Scan</span>
+                <span id="scan-text">Scan from Sticker QR Code</span>
             </button>
 
             <input type="file" id="qr-input-file" accept="image/*" class="hidden">
@@ -196,7 +194,7 @@
             <div class="input-row">
                 <div class="input-wrapper">
                     <label class="input-label">URN (UMRN)</label>
-                    <input type="text" id="urn-main" placeholder="Scan..." oninput="syncInputs()">
+                    <input type="text" id="urn-main" placeholder="Waiting..." oninput="syncInputs()">
                 </div>
                 <button class="btn-copy-match" onclick="copyToClipboard('urn-main', this)">COPY</button>
             </div>
@@ -204,7 +202,7 @@
             <div class="input-row">
                 <div class="input-wrapper">
                     <label class="input-label">Visit Number</label>
-                    <input type="text" id="visit-main" placeholder="Scan..." oninput="syncInputs()">
+                    <input type="text" id="visit-main" placeholder="Waiting..." oninput="syncInputs()">
                 </div>
                 <button class="btn-copy-match" onclick="copyToClipboard('visit-main', this)">COPY</button>
             </div>
@@ -212,4 +210,259 @@
 
         <div class="action-stack">
             <button class="btn-launch btn-accent" onclick="launchRedcap('rounding')">Rounding RedCap</button>
-            <button class="btn-launch btn-red" onclick="launchRedcap('met')">MET Call Red
+            <button class="btn-launch btn-red" onclick="launchRedcap('met')">MET Call RedCap</button>
+            <button class="btn-launch btn-purple" onclick="showCareLog()">Care Call Log</button>
+        </div>
+    </div>
+
+    <div id="view-care-log" class="hidden">
+        <button class="btn-back" onclick="showHome()">← Back to Home</button>
+
+        <div class="card">
+            <div class="section-title">Log Entry Details</div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Patient Surname</label><input type="text" id="cc-surname"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Patient Given Name</label><input type="text" id="cc-given"></div></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Ward</label>
+                    <select id="cc-location"><option value="">Select Ward...</option></select>
+                </div>
+            </div>
+            
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Bed Number</label><input type="text" id="cc-bed"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">UMRN</label><input type="text" id="cc-urn"></div></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Current Inpatient</label>
+                    <select id="cc-inpatient"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+            </div>
+
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Consultant Name</label><input type="text" id="cc-consultant"></div></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Team (Specialty)</label>
+                    <select id="cc-team">
+                        <option value="">Select Team...</option>
+                        <option value="1">Acute Surgical Unit (ASU)</option>
+                        <option value="2">Advanced Heart Failure and Transplant (AHFT)</option>
+                        <option value="3">Advanced Lung (ALDU)</option>
+                        <option value="4">Anaesthesia and Pain medicine</option>
+                        <option value="7">Cardiology services</option>
+                        <option value="14">Emergency medicine / ED / AECC</option>
+                        <option value="17">General medicine / AMU</option>
+                        <option value="18">General surgery</option>
+                        <option value="26">Intensive care medicine</option>
+                        <option value="32">Nephrology and Dialysis</option>
+                        <option value="54">Renal</option>
+                        <option value="60">Urology</option>
+                        <option value="61">Vascular Surgery</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Caller's Name</label><input type="text" id="cc-caller"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Relationship to Patient</label><input type="text" id="cc-rel"></div></div>
+            
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label class="input-label">Consent for Follow-up</label>
+                    <select id="cc-consent"><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+                <div style="font-size:0.8rem; color:var(--muted); font-weight:800; margin-bottom:6px;">TYPE (Select all that apply)</div>
+                <label class="cb-row"><input type="checkbox" id="cc-type-phys"> Physical / Mental State Deterioration</label>
+                <label class="cb-row"><input type="checkbox" id="cc-type-comm"> Communication Issues</label>
+                <label class="cb-row"><input type="checkbox" id="cc-type-comp"> Complaint</label>
+            </div>
+
+            <div class="section-title">Details</div>
+            <div class="input-wrapper">
+                <textarea id="cc-story" placeholder="Full narrative / details..."></textarea>
+            </div>
+            <div class="checkbox-group">
+                 <label class="cb-row"><input type="checkbox" id="cc-digital" checked> Digital Medical Record Completed</label>
+            </div>
+        </div>
+
+        <div class="action-stack">
+            <button class="btn-launch btn-accent" onclick="generatePDF()">1. Save PDF Log</button>
+            <button class="btn-launch btn-blue" onclick="openEmail()">2. Open Email</button>
+            <button class="btn-launch btn-red" onclick="launchRedcap('care')">3. Launch Care Call RedCap</button>
+            
+            <div class="rc-copy-section">
+                <div class="rc-header">REDCap Handy Data</div>
+                <div class="rc-row"><div class="rc-input-box"><label>URN</label><input type="text" id="mini-urn" readonly></div><button class="btn-copy-match" onclick="copyToClipboard('mini-urn', this)">COPY</button></div>
+                <div class="rc-row"><div class="rc-input-box"><label>VISIT</label><input type="text" id="mini-visit" readonly></div><button class="btn-copy-match" onclick="copyToClipboard('mini-visit', this)">COPY</button></div>
+            </div>
+
+            <button class="btn-launch btn-reset" onclick="resetAllFields()">Reset All Fields</button>
+        </div>
+        <div style="height:40px;"></div>
+    </div>
+    
+    <div id="status" style="text-align:center; color:gray; font-size:0.8rem; margin:10px;"></div>
+  </div>
+
+<script>
+    const BASE_URL = "https://datalibrary-rc.health.wa.gov.au/surveys/?s=K3WAPC4KKXWNTF3F";
+    const MET_EMAIL = "fshsqr.MET@health.wa.gov.au";
+    const LOCATIONS = [
+        {v:1, t:"3A"}, {v:2, t:"3B"}, {v:3, t:"3DMFAU"}, {v:4, t:"Birth Suite"}, {v:5, t:"3C"},
+        {v:6, t:"4A"}, {v:7, t:"4B"}, {v:8, t:"4C"}, {v:9, t:"4D"}, {v:10, t:"5A"},
+        {v:11, t:"5B"}, {v:12, t:"5C"}, {v:13, t:"5D"}, {v:14, t:"6A"}, {v:15, t:"6B"},
+        {v:16, t:"6C"}, {v:17, t:"6D"}, {v:18, t:"7A"}, {v:19, t:"7B"}, {v:20, t:"7C"},
+        {v:21, t:"7D"}, {v:36, t:"ED"}, {v:41, t:"HDU"}, {v:43, t:"ICU"}
+    ];
+
+    const locSelect = document.getElementById('cc-location');
+    LOCATIONS.forEach(l => {
+        let opt = document.createElement('option');
+        opt.value = l.v; opt.text = l.t; locSelect.add(opt);
+    });
+
+    function showCareLog() {
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-care-log').classList.remove('hidden');
+        syncInputs();
+        window.scrollTo(0,0);
+    }
+    function showHome() {
+        document.getElementById('view-home').classList.remove('hidden');
+        document.getElementById('view-care-log').classList.add('hidden');
+    }
+    function syncInputs() {
+        const u = document.getElementById('urn-main').value;
+        const v = document.getElementById('visit-main').value;
+        if(u) { document.getElementById('cc-urn').value = u; document.getElementById('mini-urn').value = u; }
+        if(v) { document.getElementById('mini-visit').value = v; }
+    }
+
+    function resetAllFields() {
+        if (confirm("Are you sure you want to clear all data? This cannot be undone.")) {
+            document.getElementById('urn-main').value = "";
+            document.getElementById('visit-main').value = "";
+            ['cc-surname', 'cc-given', 'cc-bed', 'cc-urn', 'cc-consultant', 'cc-caller', 'cc-rel', 'cc-story', 'mini-urn', 'mini-visit'].forEach(f => document.getElementById(f).value = "");
+            document.getElementById('cc-location').value = "";
+            document.getElementById('cc-team').value = "";
+            document.getElementById('cc-inpatient').value = "Yes";
+            document.getElementById('cc-consent').value = "Yes";
+            ['cc-type-phys', 'cc-type-comm', 'cc-type-comp'].forEach(c => document.getElementById(c).checked = false);
+            document.getElementById('cc-digital').checked = true;
+            alert("Form cleared.");
+            showHome();
+        }
+    }
+
+    function getShiftInfo() {
+        const now = new Date();
+        const d = ("0"+now.getDate()).slice(-2);
+        const m = ("0"+(now.getMonth()+1)).slice(-2);
+        const y = now.getFullYear();
+        const h = now.getHours() + (now.getMinutes()/60);
+        let c="3"; if(h>=7.5 && h<14.5)c="1"; else if(h>=14.5 && h<20)c="2";
+        return { api: `${y}-${m}-${d}`, display: `${d}/${m}/${y}`, code: c };
+    }
+    document.getElementById('status').innerText = `Date: ${getShiftInfo().display}`;
+
+    let scanner=null; let isScanning=false;
+    function toggleScanner(){ if(isScanning) stopScan(); else startScan(); }
+    function startScan(){
+        document.getElementById('reader').style.display='block';
+        document.getElementById('scan-text').innerText="STOP CAMERA";
+        isScanning=true;
+        if(!scanner) scanner = new Html5Qrcode("reader");
+        scanner.start({facingMode:"environment"}, {fps:10, qrbox:250}, (txt)=>{
+            processQrResult(txt); stopScan();
+        }).catch(()=>{ alert("Camera error or permission denied."); stopScan(); });
+    }
+    function stopScan(){
+        if(scanner) {
+            scanner.stop().then(()=>{
+                document.getElementById('reader').style.display='none';
+                document.getElementById('scan-text').innerText="Scan from Sticker QR Code";
+                isScanning=false;
+            });
+        }
+    }
+
+    const fileinput = document.getElementById('qr-input-file');
+    fileinput.addEventListener('change', e => {
+        if (e.target.files.length === 0) return;
+        const imageFile = e.target.files[0];
+        if (!scanner) scanner = new Html5Qrcode("reader");
+        if (isScanning) stopScan();
+        scanner.scanFile(imageFile, true).then(txt => {
+                processQrResult(txt); alert("QR Code Detected!");
+            }).catch(err => { alert("Could not detect a QR code. Try a clearer photo."); });
+    });
+
+    function processQrResult(txt) {
+        const u = txt.match(/([A-Z]\d{7})/i);
+        const v = txt.match(/(\d{8})/);
+        if(u) document.getElementById('urn-main').value = u[1];
+        if(v) document.getElementById('visit-main').value = v[1];
+        if(u||v) { syncInputs(); navigator.vibrate?.(200); }
+    }
+
+    async function generatePDF() {
+        const { jsPDF } = window.jspdf; const doc = new jsPDF();
+        const loc = document.getElementById('cc-location');
+        const wardTxt = loc.options[loc.selectedIndex].text === "Select Ward..." ? "" : loc.options[loc.selectedIndex].text;
+        const teamSel = document.getElementById('cc-team');
+        const teamTxt = teamSel.options[teamSel.selectedIndex].text === "Select Team..." ? "" : teamSel.options[teamSel.selectedIndex].text;
+        const d = {
+            sur: document.getElementById('cc-surname').value, giv: document.getElementById('cc-given').value,
+            ward: wardTxt, bed: document.getElementById('cc-bed').value, urn: document.getElementById('cc-urn').value,
+            inpt: document.getElementById('cc-inpatient').value, cons: document.getElementById('cc-consultant').value,
+            team: teamTxt, caller: document.getElementById('cc-caller').value, rel: document.getElementById('cc-rel').value,
+            date: getShiftInfo().display, consent: document.getElementById('cc-consent').value,
+            story: document.getElementById('cc-story').value, digi: document.getElementById('cc-digital').checked ? "YES" : "NO",
+            phys: document.getElementById('cc-type-phys').checked ? "YES" : "NO",
+            comm: document.getElementById('cc-type-comm').checked ? "YES" : "NO",
+            comp: document.getElementById('cc-type-comp').checked ? "YES" : "NO"
+        };
+        const m = 14; let y = 15; doc.setFontSize(16); doc.text("Fiona Stanley Hospital", 105, y, {align:"center"});
+        y += 8; doc.setFontSize(12); doc.text("CARE Call Received Log", 105, y, {align:"center"});
+        y += 12; doc.setFontSize(10);
+        function drawR(l, v) { doc.text(`${l}: ${v || ""}`, m, y); y += 8; }
+        drawR("Patient", `${d.sur}, ${d.giv}`); drawR("Ward", d.ward); drawR("URN", d.urn); drawR("Team", d.team);
+        drawR("Caller", d.caller); drawR("Details", "");
+        const lines = doc.splitTextToSize(d.story, 180); doc.text(lines, m, y);
+        doc.save(`CARE_Log_${d.urn}.pdf`);
+    }
+
+    function copyToClipboard(id, btn) {
+        const val = document.getElementById(id).value;
+        if(!val) return;
+        navigator.clipboard.writeText(val).then(() => {
+            let t = btn.innerText; btn.innerText="✓"; btn.classList.add('copied');
+            setTimeout(()=>{btn.innerText=t; btn.classList.remove('copied');}, 1500);
+        });
+    }
+
+    function openEmail() {
+        const date = getShiftInfo().display;
+        const body = `Dear ALERT Admin,\n\nPlease find Care Call Log attached.\n\nDate: ${date}`;
+        window.location.href = `mailto:${MET_EMAIL}?subject=CARE Call Log - ${date}&body=${encodeURIComponent(body)}`;
+    }
+
+    function launchRedcap(mode) {
+        let p = []; const t = getShiftInfo();
+        p.push(`shift_date=${t.api}`); p.push(`shifttype=${t.code}`); p.push(`site=1`);
+        if(mode==='care'){
+            p.push(`alert_team=1`); p.push(`contactreason=5`);
+            const locVal = document.getElementById('cc-location').value; if(locVal) p.push(`location_fs=${locVal}`);
+        } else if(mode==='met'){
+            p.push(`contactreason=1`); p.push(`alert_team=1`); p.push(`adds_score=9`);
+        }
+        window.open(`${BASE_URL}&${p.join('&')}`, '_blank');
+    }
+</script>
+</body>
+</html>
