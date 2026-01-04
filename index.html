@@ -186,11 +186,11 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/>
                 </svg>
-                <span id="scan-text">Scan QR code on sticker</span>
+                <span id="scan-text">Scan  code on sticker</span>
             </button>
 
-            <input type="file" id="qr-input-file" accept="image/*" class="hidden">
-            <button class="btn-launch" style="background:#4b5563; gap:12px;" onclick="document.getElementById('qr-input-file').click()">
+            <input type="file" id="-input-file" accept="image/*" class="hidden">
+            <button class="btn-launch" style="background:#4b5563; gap:12px;" onclick="document.getElementById('-input-file').click()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
                 </svg>
@@ -389,7 +389,7 @@
 
 <script>
     const BASE_URL = "https://datalibrary-rc.health.wa.gov.au/surveys/?s=K3WAPC4KKXWNTF3F";
-    const MET_EMAIL = "fshsqr.MET@health.wa.gov.au";
+    const MET_EMAIL = "fshs.MET@health.wa.gov.au";
     const LOCATIONS = [
         {v:1, t:"3A"}, {v:2, t:"3B"}, {v:3, t:"3DMFAU"}, {v:4, t:"Birth Suite"}, {v:5, t:"3C"},
         {v:6, t:"4A"}, {v:7, t:"4B"}, {v:8, t:"4C"}, {v:9, t:"4D"}, {v:10, t:"5A"},
@@ -486,9 +486,9 @@
         document.getElementById('reader').style.display='block';
         document.getElementById('scan-text').innerText="STOP CAMERA";
         isScanning=true;
-        if(!scanner) scanner = new Html5Qrcode("reader");
-        scanner.start({facingMode:"environment"}, {fps:10, qrbox:250}, (txt)=>{
-            processQrResult(txt); // Updated to use centralized processor
+        if(!scanner) scanner = new Html5code("reader");
+        scanner.start({facingMode:"environment"}, {fps:10, box:250}, (txt)=>{
+            processResult(txt); // Updated to use centralized processor
             stopScan();
         }).catch(()=>{ alert("Camera error"); stopScan(); });
     }
@@ -496,20 +496,20 @@
     function stopScan(){
         if(scanner) scanner.stop().then(()=>{
             document.getElementById('reader').style.display='none';
-            document.getElementById('scan-text').innerText="Scan QR code on sticker";
+            document.getElementById('scan-text').innerText="Scan  code on sticker";
             isScanning=false;
         });
     }
 
     // NEW: File Upload Listener for "Upload or Take Photo"
-    const fileinput = document.getElementById('qr-input-file');
+    const fileinput = document.getElementById('-input-file');
     fileinput.addEventListener('change', e => {
         if (e.target.files.length === 0) return;
         const imageFile = e.target.files[0];
 
         // Initialize scanner if needed
         if (!scanner) {
-            scanner = new Html5Qrcode("reader");
+            scanner = new Html5code("reader");
         }
         
         // Scan the file
@@ -525,23 +525,24 @@
     });
 
     // NEW: Centralized QR Processing (Handles JSON format)
-    function processQrResult(txt) {
-        try {
-            // Try to parse as JSON (FSH Sticker Format)
-            const data = JSON.parse(txt);
-            if (data.u) document.getElementById('urn-main').value = data.u.toUpperCase();
-            if (data.e) document.getElementById('visit-main').value = data.e;
-        } catch (e) {
-            // Fallback for standard QR codes
-            const u = txt.match(/([A-Z]\d{7})/i);
-            const v = txt.match(/(\d{8})/);
-            if(u) document.getElementById('urn-main').value = u[1].toUpperCase();
-            if(v) document.getElementById('visit-main').value = v[1];
+  function processQrResult(txt) {
+        // 1. Robust URN Extraction 
+        // Checks for specific JSON format "u":"..." first, then falls back to general pattern
+        const uMatch = txt.match(/"u"\s*:\s*"([^"]+)"/i) || txt.match(/([A-Z]\d{7})/i);
+        if (uMatch && uMatch[1]) {
+            document.getElementById('urn-main').value = uMatch[1].toUpperCase();
         }
-        
+
+        // 2. Robust Visit Number Extraction
+        // Checks for "e":"12345678" or "e":12345678 (ignoring potential quote issues)
+        const vMatch = txt.match(/"e"\s*:\s*"?(\d+)"?/i) || txt.match(/\b(\d{8})\b/);
+        if (vMatch && vMatch[1]) {
+            document.getElementById('visit-main').value = vMatch[1];
+        }
+
         syncInputs();
-        if(navigator.vibrate) navigator.vibrate(200);
-    }
+        if (navigator.vibrate) navigator.vibrate(200);
+    }  
 
     async function generatePDF() {
         const { jsPDF } = window.jspdf;
