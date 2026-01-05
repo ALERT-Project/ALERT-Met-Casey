@@ -12,13 +12,13 @@
 
   <style>
     :root {
-      --bg: #f0f9f9; --card: #ffffff; --ink: #111827; --muted: #6b7280; 
-      --accent: #007a7a; --accent-hover: #006262;
-      --red: #ef4444; --red-hover: #d32f2f;
-      --purple: #7e22ce; --blue: #2563eb; --teal-dark: #0f766e;
-      --line: #cbd5e1; --input-bg: #f8fbfb;
+      --bg: #f3f4f6; --card: #ffffff; --ink: #1f2937; --muted: #6b7280; 
+      --accent: #0d9488; --accent-hover: #0f766e; /* Teal */
+      --red: #ef4444; --red-bg: #fef2f2;
+      --line: #e5e7eb; --input-bg: #f9fafb;
       --success: #10b981;
-      --radius: 12px;
+      --radius: 16px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
     body {
@@ -29,132 +29,165 @@
     }
 
     header {
-      padding: 16px; border-bottom: 1px solid var(--line);
-      background: var(--card); text-align: center;
-      position: sticky; top: 0; z-index: 10;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      padding: 16px; background: var(--card); text-align: center;
+      position: sticky; top: 0; z-index: 50;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      border-bottom: 1px solid var(--line);
     }
-    header h1 { font-size: 1.1rem; font-weight: 800; color: var(--accent); margin: 0; line-height: 1.4; }
+    header h1 { font-size: 1.25rem; font-weight: 900; color: var(--accent); margin: 0; letter-spacing: -0.5px; }
 
     .container {
-      max-width: 650px; margin: 0 auto; padding: 16px;
-      flex: 1; display: flex; flex-direction: column; gap: 20px;
+      max-width: 600px; margin: 0 auto; padding: 20px;
+      flex: 1; display: flex; flex-direction: column; gap: 24px;
       width: 100%; box-sizing: border-box;
     }
 
     .card {
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: var(--radius); padding: 20px;
-      display: flex; flex-direction: column; gap: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      background: var(--card); border-radius: var(--radius); padding: 24px;
+      display: flex; flex-direction: column; gap: 20px;
+      box-shadow: var(--shadow); border: 1px solid white;
     }
 
     .section-title {
-      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
-      color: var(--muted); font-weight: 800; margin-top: 4px; margin-bottom: 4px; 
-      border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--muted); font-weight: 800; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
     }
+    .section-title::after { content:""; flex:1; height:2px; background:var(--bg); }
 
-    /* GRID & INPUTS */
-    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
-    .col-6 { grid-column: span 6; } .col-12 { grid-column: span 12; }
-
-    .input-row { display: flex; gap: 10px; align-items: flex-end; }
+    /* MODERN INPUTS */
+    .input-row { display: flex; gap: 12px; align-items: flex-end; }
     .input-wrapper { position: relative; flex: 1; }
     
-    .input-wrapper input, .input-wrapper select, .input-wrapper textarea,
-    .calc-input {
-      width: 100%; padding: 22px 12px 6px 12px;
-      border-radius: 8px; border: 2px solid var(--line);
+    .input-wrapper input, .input-wrapper select, .input-wrapper textarea {
+      width: 100%; padding: 24px 16px 8px 16px;
+      border-radius: 12px; border: 2px solid var(--line);
       background: var(--input-bg); color: var(--ink);
-      font-size: 1.1rem; outline: none; font-weight: 600;
+      font-size: 1.15rem; outline: none; font-weight: 600;
       box-sizing: border-box; font-family: inherit;
-      height: 60px; transition: border-color 0.2s;
+      height: 64px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .input-wrapper input:focus, .input-wrapper select:focus, 
-    .input-wrapper textarea:focus, .calc-input:focus {
-        border-color: var(--accent); background: #fff;
+    .input-wrapper input:focus, .input-wrapper select:focus {
+        border-color: var(--accent); background: #fff; 
+        box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
     }
-    
-    .input-wrapper select { appearance: none; }
-    .input-wrapper textarea { min-height: 200px; padding-top: 12px; font-weight: 400; resize: vertical; line-height: 1.5; }
-    
     .input-label {
-      position: absolute; top: 6px; left: 14px;
-      font-size: 0.7rem; color: var(--muted); font-weight: 700;
+      position: absolute; top: 8px; left: 16px;
+      font-size: 0.75rem; color: var(--muted); font-weight: 700;
       text-transform: uppercase; pointer-events: none; z-index: 2;
     }
-    
-    /* CALCULATOR SPECIFIC STYLES */
-    .calc-label { font-size: 0.75rem; font-weight: 700; color: var(--muted); margin-bottom: 4px; display: block;}
-    .calc-score { font-size: 1.5rem; font-weight: 800; color: var(--accent); text-align: right; line-height: 60px; }
-    .calc-score.m-crit { color: var(--red); }
-    
-    /* BUTTON GROUPS */
-    .button-group { display: flex; width: 100%; border: 2px solid var(--line); border-radius: 8px; overflow: hidden; }
-    .select-btn {
-        flex: 1; border: none; background: white; padding: 12px 4px;
-        font-weight: 600; color: var(--muted); cursor: pointer;
-        border-right: 1px solid var(--line); transition: all 0.2s;
-    }
-    .select-btn:last-child { border-right: none; }
-    .select-btn.active { background: var(--accent); color: white; }
 
-    /* TAP BUTTON FOR RR */
-    .tap-btn {
-        width: 100%; aspect-ratio: 1; max-height: 300px; margin: 0 auto;
-        border-radius: 50%; border: 8px solid #e0f2f1;
-        background: var(--accent); color: white;
-        font-size: 2rem; font-weight: 800; cursor: pointer;
-        box-shadow: 0 10px 20px rgba(0,122,122,0.3);
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        transition: transform 0.1s, background 0.2s;
-        user-select: none; -webkit-tap-highlight-color: transparent;
-    }
-    .tap-btn:active { transform: scale(0.95); background: var(--accent-hover); }
-    .tap-btn span { font-size: 0.9rem; font-weight: 500; margin-top: 8px; opacity: 0.8; text-transform: uppercase;}
+    /* GRID LAYOUTS */
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; align-items: center;}
+    .col-6 { grid-column: span 6; } .col-12 { grid-column: span 12; } .col-8 { grid-column: span 8; } .col-4 { grid-column: span 4; }
 
-    /* CHECKBOXES & UTILS */
+    /* CALCULATOR SPECIFIC */
+    .calc-row {
+        background: #f8fafc; border-radius: 12px; padding: 8px;
+        border: 1px solid var(--line);
+    }
+    .calc-input {
+        width: 100%; height: 55px; border: 2px solid var(--line);
+        border-radius: 10px; padding: 0 12px; font-size: 1.2rem;
+        font-weight: 700; color: var(--ink); text-align: center;
+        transition: all 0.2s;
+    }
+    .calc-input:focus { border-color: var(--accent); outline: none; background: white; }
+    
+    .score-box {
+        width: 100%; height: 55px; border-radius: 10px;
+        background: #e5e7eb; border: none;
+        color: var(--muted); font-size: 1.4rem; font-weight: 800;
+        text-align: center; display: flex; align-items: center; justify-content: center;
+        transition: all 0.3s;
+    }
+    /* When score is high */
+    .score-box.active-score { background: var(--accent); color: white; }
+    .score-box.m-score { background: var(--red); color: white; }
+    /* When editable */
+    .score-box.editable { background: white; border: 2px solid #f59e0b; color: var(--ink); cursor: text; }
+
+    .calc-label {
+        font-size: 0.75rem; text-transform: uppercase; color: var(--muted); 
+        font-weight: 700; display: block; margin-bottom: 4px; padding-left: 4px;
+    }
+
+    /* OVERRIDE TOGGLE */
+    .override-bar {
+        background: #fffbeb; border: 1px solid #fcd34d; color: #92400e;
+        padding: 12px 16px; border-radius: 10px; display: flex; 
+        justify-content: space-between; align-items: center; margin-bottom: 16px;
+    }
+    .toggle-switch {
+        position: relative; display: inline-block; width: 44px; height: 24px;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+        position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #ccc; transition: .4s; border-radius: 34px;
+    }
+    .slider:before {
+        position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+        background-color: white; transition: .4s; border-radius: 50%;
+    }
+    input:checked + .slider { background-color: #f59e0b; }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    /* AVPU BUTTONS */
+    .avpu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; background: var(--line); padding: 4px; border-radius: 10px; }
+    .avpu-btn {
+        border: none; background: #f9fafb; padding: 12px 0; font-weight: 700; color: var(--muted);
+        border-radius: 6px; cursor: pointer; font-size: 0.9rem;
+    }
+    .avpu-btn.active { background: var(--accent); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+    /* TOTAL BAR */
+    .total-bar {
+        background: #111827; padding: 20px; border-radius: 14px;
+        display: flex; justify-content: space-between; align-items: center;
+        color: white; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* RESP TIMER */
+    .timer-display {
+        background: #111827; color: white; border-radius: 16px; padding: 30px 20px;
+        text-align: center; margin-bottom: 24px; position: relative; overflow: hidden;
+    }
+    .time-big { font-size: 5rem; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums;}
+    .time-label { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; font-weight: 600; margin-top: 8px;}
+    .tap-btn-lg {
+        width: 100%; padding: 30px; border-radius: 20px; border: none;
+        background: var(--accent); color: white; font-size: 1.5rem; font-weight: 900;
+        text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+        box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.4);
+        transition: transform 0.1s; display: flex; flex-direction: column; align-items: center;
+    }
+    .tap-btn-lg:active { transform: scale(0.96); background: var(--accent-hover); }
+
+    /* UTILS */
+    .hidden { display: none !important; }
+    .btn-launch {
+      display: flex; align-items: center; justify-content: center; width: 100%;
+      padding: 18px; border: none; border-radius: 12px; color: white;
+      cursor: pointer; font-size: 1rem; font-weight: 700; text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s;
+    }
+    .btn-launch:active { transform: scale(0.98); }
+    .btn-accent { background: var(--accent); }
+    .btn-red { background: var(--red); }
+    .btn-purple { background: #7c3aed; }
+    .btn-blue { background: #2563eb; }
+    .btn-reset { background: transparent; color: var(--muted); border: 2px solid var(--line); margin-top: 10px; box-shadow: none; }
+    .btn-copy-match { 
+        height: 64px; width: 70px; border-radius: 12px; border: 2px solid var(--line); 
+        background: white; font-weight: 800; color: var(--accent); 
+    }
+    .btn-back { margin-bottom: 16px; background: transparent; border: none; font-weight: 700; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 6px;}
+    
     .checkbox-group { display: flex; flex-direction: column; gap: 12px; background: #f8fafc; padding: 16px; border-radius: 10px; border: 2px solid var(--line); }
     .cb-row { display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; font-weight: 600; line-height: 1.4; }
     .cb-row input { width: 24px; height: 24px; accent-color: var(--accent); flex-shrink: 0; margin-top: 0px; }
     
-    .btn-copy-match {
-      width: 80px; height: 60px; border: 2px solid var(--line); background-color: white;
-      color: var(--accent); border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer;
-      flex-shrink: 0; box-shadow: 0 2px 2px rgba(0,0,0,0.05);
-    }
-    .btn-copy-match:active { transform: scale(0.96); background: #f0f9f9; }
-    .btn-copy-match.copied { background-color: var(--success); color: white; border-color: var(--success); }
-
-    .rc-copy-section { display: flex; flex-direction: column; gap: 12px; background: #fff5f5; padding: 16px; border-radius: 10px; border: 2px solid #fecaca; margin-top: 8px; }
-    .rc-row { display: flex; gap: 10px; align-items: stretch; }
-    .rc-input-box { flex: 1; background: white; border: 2px solid #fca5a5; border-radius: 8px; padding: 0 12px; display: flex; align-items: center; height: 55px; }
-    .rc-input-box label { font-size: 0.7rem; color: var(--red); font-weight: 700; margin-right: 10px; flex-shrink: 0; }
-    .rc-input-box input { border: none; background: transparent; width: 100%; height: 100%; font-size: 1.1rem; font-weight: 700; color: var(--ink); padding: 0; outline: none; }
-
-    /* LAUNCH BUTTONS */
-    .action-stack { display: flex; flex-direction: column; gap: 16px; }
-    .btn-launch {
-      display: flex; align-items: center; justify-content: center; width: 100%;
-      padding: 20px; border: none; border-radius: 12px; color: white;
-      cursor: pointer; font-size: 1.1rem; font-weight: 700; text-transform: uppercase;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s;
-    }
-    .btn-launch:active { transform: scale(0.98); }
-    .btn-accent { background-color: var(--accent); }
-    .btn-red { background-color: var(--red); }
-    .btn-purple { background-color: var(--purple); }
-    .btn-blue { background-color: var(--blue); }
-    .btn-teal-dark { background-color: var(--teal-dark); }
-    .btn-reset { background-color: transparent; color: var(--muted); border: 2px solid var(--line); margin-top: 10px; }
-
-    .hidden { display: none !important; }
-    .btn-back {
-        background: transparent; border: 2px solid var(--line);
-        padding: 10px 16px; border-radius: 8px; color: var(--ink);
-        font-weight: 700; cursor: pointer; margin-bottom: 12px; width: 100%; text-align: center;
-    }
     #reader { width: 100%; border-radius: 12px; overflow: hidden; display: none; margin-bottom: 12px; background: #000; }
   </style>
 </head>
@@ -175,225 +208,218 @@
                 </svg>
                 <span id="scan-text">Scan from Sticker QR Code</span>
             </button>
-
             <input type="file" id="qr-input-file" accept="image/*" class="hidden">
             <button class="btn-launch" style="background:#4b5563; gap:12px;" onclick="document.getElementById('qr-input-file').click()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
                 </svg>
-                <span>Upload or Take Photo</span>
+                <span>Upload Photo</span>
             </button>
         </div>
 
         <div class="card">
             <div class="section-title">Patient Identification</div>
-            
             <div class="input-row">
                 <div class="input-wrapper">
                     <label class="input-label">URN (UMRN)</label>
-                    <input type="text" id="urn-main" placeholder="Scan..." oninput="syncInputs()">
+                    <input type="text" id="urn-main" inputmode="numeric" placeholder="Scan..." oninput="syncInputs()">
                 </div>
                 <button class="btn-copy-match" onclick="copyToClipboard('urn-main', this)">COPY</button>
             </div>
-
             <div class="input-row">
                 <div class="input-wrapper">
                     <label class="input-label">Visit Number</label>
-                    <input type="text" id="visit-main" placeholder="Scan..." oninput="syncInputs()">
+                    <input type="text" id="visit-main" inputmode="numeric" placeholder="Scan..." oninput="syncInputs()">
                 </div>
                 <button class="btn-copy-match" onclick="copyToClipboard('visit-main', this)">COPY</button>
             </div>
         </div>
 
-        <div class="action-stack">
+        <div class="action-stack" style="display:flex; flex-direction:column; gap:16px;">
             <button class="btn-launch btn-accent" onclick="launchRedcap('rounding')">Rounding RedCap</button>
             <button class="btn-launch btn-red" onclick="launchRedcap('met')">MET Call RedCap</button>
-            <div style="display:flex; gap:10px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
                 <button class="btn-launch btn-blue" onclick="showView('view-adds')">ADDS Calc</button>
-                <button class="btn-launch btn-teal-dark" onclick="showView('view-rr')">Resp Timer</button>
+                <button class="btn-launch" style="background:#0f766e" onclick="showView('view-rr')">Resp Timer</button>
             </div>
             <button class="btn-launch btn-purple" onclick="showView('view-care-log')">Care Call Log</button>
         </div>
     </div>
 
     <div id="view-care-log" class="hidden">
-        <button class="btn-back" onclick="showView('view-home')">← Back to Home</button>
+        <button class="btn-back" onclick="showView('view-home')">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> Back to Home
+        </button>
 
         <div class="card">
             <div class="section-title">Log Entry Details</div>
-            
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Patient Surname</label><input type="text" id="cc-surname"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Patient Given Name</label><input type="text" id="cc-given"></div></div>
-            
-            <div class="input-row">
-                <div class="input-wrapper">
-                    <label class="input-label">Ward</label>
-                    <select id="cc-location"><option value="">Select Ward...</option></select>
-                </div>
-            </div>
-            
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Bed Number</label><input type="text" id="cc-bed"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">UMRN</label><input type="text" id="cc-urn"></div></div>
-            
-            <div class="input-row">
-                <div class="input-wrapper">
-                    <label class="input-label">Current Inpatient</label>
-                    <select id="cc-inpatient"><option value="Yes">Yes</option><option value="No">No</option></select>
-                </div>
-            </div>
-
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Consultant Name</label><input type="text" id="cc-consultant"></div></div>
-            
-            <div class="input-row">
-                <div class="input-wrapper">
-                    <label class="input-label">Team (Specialty)</label>
-                    <select id="cc-team"><option value="">Select Team...</option></select>
-                </div>
-            </div>
-
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Caller's Name</label><input type="text" id="cc-caller"></div></div>
-            <div class="input-row"><div class="input-wrapper"><label class="input-label">Caller's Relationship to Patient</label><input type="text" id="cc-rel"></div></div>
-            
-            <div class="input-row">
-                <div class="input-wrapper">
-                    <label class="input-label">Consent for Follow-up Contact</label>
-                    <select id="cc-consent"><option value="Yes">Yes</option><option value="No">No</option></select>
-                </div>
-            </div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Surname</label><input type="text" id="cc-surname"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Given Name</label><input type="text" id="cc-given"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Ward</label><select id="cc-location"><option value="">Select Ward...</option></select></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Bed</label><input type="text" id="cc-bed"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">URN</label><input type="text" id="cc-urn"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Inpatient?</label><select id="cc-inpatient"><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Consultant</label><input type="text" id="cc-consultant"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Team</label><select id="cc-team"><option value="">Select Team...</option></select></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Caller Name</label><input type="text" id="cc-caller"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Relation</label><input type="text" id="cc-rel"></div></div>
+            <div class="input-row"><div class="input-wrapper"><label class="input-label">Consent?</label><select id="cc-consent"><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
 
             <div class="checkbox-group">
-                <div style="font-size:0.8rem; color:var(--muted); font-weight:800; margin-bottom:6px;">TYPE (Select all that apply)</div>
+                <div style="font-size:0.8rem; color:var(--muted); font-weight:800; margin-bottom:6px;">TYPE</div>
                 <label class="cb-row"><input type="checkbox" id="cc-type-phys"> Physical / Mental State Deterioration</label>
                 <label class="cb-row"><input type="checkbox" id="cc-type-comm"> Communication Issues</label>
                 <label class="cb-row"><input type="checkbox" id="cc-type-comp"> Complaint</label>
             </div>
 
-            <div class="section-title">Details</div>
-            <div class="input-wrapper">
-                <textarea id="cc-story" placeholder="Full narrative / details..."></textarea>
-            </div>
-
-            <div class="checkbox-group">
-                 <label class="cb-row">
-                    <input type="checkbox" id="cc-digital" checked> Digital Medical Record Completed
-                 </label>
-            </div>
+            <div class="section-title">Narrative</div>
+            <div class="input-wrapper"><textarea id="cc-story" placeholder="Details..."></textarea></div>
+            <div class="checkbox-group"><label class="cb-row"><input type="checkbox" id="cc-digital" checked> Digital Record Completed</label></div>
         </div>
 
-        <div class="action-stack">
-            <button class="btn-launch btn-accent" onclick="generatePDF()">1. Save PDF Log</button>
-            <button class="btn-launch btn-blue" onclick="openEmail()">2. Open Email</button>
-            <button class="btn-launch btn-red" style="border:2px solid white; box-shadow:0 4px 10px rgba(239,68,68,0.4);" onclick="launchRedcap('care')">3. Launch Care Call RedCap</button>
-            
-            <div class="rc-copy-section">
-                <div class="rc-header">REDCap Handy Data</div>
-                <div class="rc-row">
-                    <div class="rc-input-box"><label>URN</label><input type="text" id="mini-urn" readonly></div>
-                    <button class="btn-copy-match" onclick="copyToClipboard('mini-urn', this)">COPY</button>
-                </div>
-                <div class="rc-row">
-                    <div class="rc-input-box"><label>VISIT</label><input type="text" id="mini-visit" readonly></div>
-                    <button class="btn-copy-match" onclick="copyToClipboard('mini-visit', this)">COPY</button>
-                </div>
-            </div>
-            <button class="btn-launch btn-reset" onclick="resetAllFields()">Reset All Fields</button>
+        <div class="action-stack" style="display:flex; flex-direction:column; gap:16px;">
+            <button class="btn-launch btn-accent" onclick="generatePDF()">1. Save PDF</button>
+            <button class="btn-launch btn-blue" onclick="openEmail()">2. Email</button>
+            <button class="btn-launch btn-red" style="border:2px solid white; box-shadow:0 4px 10px rgba(239,68,68,0.4);" onclick="launchRedcap('care')">3. Launch RedCap</button>
+            <button class="btn-launch btn-reset" onclick="resetAllFields()">Reset Form</button>
         </div>
         <div style="height:40px;"></div>
     </div>
 
     <div id="view-adds" class="hidden">
-        <button class="btn-back" onclick="showView('view-home')">← Back to Home</button>
+        <button class="btn-back" onclick="showView('view-home')">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> Back to Home
+        </button>
+        
+        <div class="override-bar">
+            <span style="font-weight:700; font-size:0.9rem;">Enable Manual Override</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="adds-override" onchange="toggleOverride()">
+                <span class="slider"></span>
+            </label>
+        </div>
+
         <div class="card">
-            <div class="section-title">ADDS Calculator</div>
-            
-            <div class="grid" style="row-gap:16px;">
-                <div class="col-6">
+            <div class="grid" style="margin-bottom:8px;">
+                <div class="col-8"><div class="section-title">Measurement</div></div>
+                <div class="col-4" style="text-align:center;"><div class="section-title" style="justify-content:center;">Score</div></div>
+            </div>
+
+            <div class="grid">
+                <div class="col-8">
                     <label class="calc-label">Resp Rate</label>
-                    <input type="number" class="calc-input" id="calc_rr" placeholder="Rate" oninput="runAddsCalc()">
+                    <input type="number" inputmode="decimal" class="calc-input" id="calc_rr" placeholder="RR" oninput="runAddsCalc()">
                 </div>
-                <div class="col-6"><div id="score_rr" class="calc-score">-</div></div>
+                <div class="col-4">
+                    <input type="text" class="score-box" id="score_rr" value="0" readonly oninput="runManualTotal()">
+                </div>
+            </div>
 
-                <div class="col-6">
+            <div class="grid">
+                <div class="col-8">
                     <label class="calc-label">SpO2 (%)</label>
-                    <input type="number" class="calc-input" id="calc_spo2" placeholder="%" oninput="runAddsCalc()">
+                    <input type="number" inputmode="decimal" class="calc-input" id="calc_spo2" placeholder="%" oninput="runAddsCalc()">
                 </div>
-                <div class="col-6"><div id="score_spo2" class="calc-score">-</div></div>
+                <div class="col-4">
+                    <input type="text" class="score-box" id="score_spo2" value="0" readonly oninput="runManualTotal()">
+                </div>
+            </div>
 
-                <div class="col-12" style="border-top:1px solid var(--line); padding-top:8px;">
-                    <label class="calc-label">Oxygen Support</label>
-                    <div style="display:flex; gap:16px; margin-bottom:8px; font-weight:600; font-size:0.9rem;">
-                        <label><input type="radio" name="calc_o2_mode" value="std" checked onchange="runAddsCalc()"> Standard (L/min)</label>
-                        <label><input type="radio" name="calc_o2_mode" value="hf" onchange="runAddsCalc()"> High Flow / FiO2</label>
-                    </div>
-                    <input type="number" class="calc-input" id="calc_o2_val" placeholder="Liters or %" oninput="runAddsCalc()">
+            <div class="grid" style="background:#f9fafb; padding:10px; border-radius:12px; border:1px solid var(--line);">
+                <div class="col-12" style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <label style="font-size:0.8rem; font-weight:700; display:flex; align-items:center;"><input type="radio" name="calc_o2_mode" value="std" checked onchange="runAddsCalc()" style="width:20px; height:20px; margin-right:6px;"> Standard</label>
+                    <label style="font-size:0.8rem; font-weight:700; display:flex; align-items:center;"><input type="radio" name="calc_o2_mode" value="hf" onchange="runAddsCalc()" style="width:20px; height:20px; margin-right:6px;"> High Flow</label>
                 </div>
-                <div class="col-12" style="text-align:right;">
-                    <div id="score_o2" class="calc-score" style="margin-top:-60px;">-</div>
+                <div class="col-8">
+                     <input type="number" inputmode="decimal" class="calc-input" id="calc_o2_val" placeholder="L / %" oninput="runAddsCalc()">
                 </div>
+                <div class="col-4">
+                    <input type="text" class="score-box" id="score_o2" value="0" readonly oninput="runManualTotal()">
+                </div>
+            </div>
 
-                <div class="col-6">
+            <div class="grid">
+                <div class="col-8">
                     <label class="calc-label">Systolic BP</label>
-                    <input type="number" class="calc-input" id="calc_sbp" placeholder="mmHg" oninput="runAddsCalc()">
+                    <input type="number" inputmode="decimal" class="calc-input" id="calc_sbp" placeholder="mmHg" oninput="runAddsCalc()">
                 </div>
-                <div class="col-6"><div id="score_sbp" class="calc-score">-</div></div>
+                <div class="col-4">
+                    <input type="text" class="score-box" id="score_sbp" value="0" readonly oninput="runManualTotal()">
+                </div>
+            </div>
 
-                <div class="col-6">
+            <div class="grid">
+                <div class="col-8">
                     <label class="calc-label">Heart Rate</label>
-                    <input type="number" class="calc-input" id="calc_hr" placeholder="BPM" oninput="runAddsCalc()">
+                    <input type="number" inputmode="decimal" class="calc-input" id="calc_hr" placeholder="BPM" oninput="runAddsCalc()">
                 </div>
-                <div class="col-6"><div id="score_hr" class="calc-score">-</div></div>
+                <div class="col-4">
+                    <input type="text" class="score-box" id="score_hr" value="0" readonly oninput="runManualTotal()">
+                </div>
+            </div>
 
-                <div class="col-6">
+            <div class="grid">
+                <div class="col-8">
                     <label class="calc-label">Temp (°C)</label>
-                    <input type="number" class="calc-input" id="calc_temp" step="0.1" placeholder="°C" oninput="runAddsCalc()">
+                    <input type="number" inputmode="decimal" class="calc-input" id="calc_temp" step="0.1" placeholder="°C" oninput="runAddsCalc()">
                 </div>
-                <div class="col-6"><div id="score_temp" class="calc-score">-</div></div>
+                <div class="col-4">
+                    <input type="text" class="score-box" id="score_temp" value="0" readonly oninput="runManualTotal()">
+                </div>
+            </div>
 
-                <div class="col-12" style="margin-top:4px;">
-                    <label class="calc-label">Consciousness (AVPU)</label>
-                    <div class="button-group" id="calc_avpu">
-                        <button class="select-btn active" data-value="A" onclick="setAvpu('A')">Alert</button>
-                        <button class="select-btn" data-value="V" onclick="setAvpu('V')">Voice</button>
-                        <button class="select-btn" data-value="P" onclick="setAvpu('P')">Pain</button>
-                        <button class="select-btn" data-value="U" onclick="setAvpu('U')">Unresp</button>
+            <div class="grid">
+                <div class="col-12">
+                    <label class="calc-label">Consciousness</label>
+                    <div class="avpu-grid" id="calc_avpu">
+                        <button class="avpu-btn active" data-value="A" onclick="setAvpu('A')">Alert</button>
+                        <button class="avpu-btn" data-value="V" onclick="setAvpu('V')">Voice</button>
+                        <button class="avpu-btn" data-value="P" onclick="setAvpu('P')">Pain</button>
+                        <button class="avpu-btn" data-value="U" onclick="setAvpu('U')">Unresp</button>
                     </div>
                 </div>
-                <div class="col-12" style="text-align:right;">
-                    <div id="score_avpu" class="calc-score">-</div>
+                <div class="col-12">
+                     <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px;">
+                        <span style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--muted);">CNS Score</span>
+                        <input type="text" class="score-box" style="width:100px;" id="score_avpu" value="0" readonly oninput="runManualTotal()">
+                     </div>
                 </div>
             </div>
             
-            <div style="margin-top:20px; padding:16px; background:#111827; border-radius:12px; display:flex; justify-content:space-between; align-items:center; color:white;">
-                <div style="font-weight:600; text-transform:uppercase;">Total Score</div>
-                <div id="calc_total_display" style="font-size:2rem; font-weight:800;">0</div>
+            <div class="total-bar">
+                <div style="font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:0.9rem;">Total ADDS Score</div>
+                <div id="calc_total_display" style="font-size:2.5rem; font-weight:900;">0</div>
             </div>
+
             <button class="btn-launch btn-reset" onclick="resetAdds()">Reset Calculator</button>
         </div>
         <div style="height:40px;"></div>
     </div>
 
     <div id="view-rr" class="hidden">
-        <button class="btn-back" onclick="showView('view-home')">← Back to Home</button>
-        <div class="card" style="text-align:center;">
-            <div class="section-title">Resp Rate Timer</div>
-            <p style="color:var(--muted); font-size:0.9rem; margin-bottom:20px;">Tap the button below for every breath.<br>Rate calculates automatically.</p>
-            
-            <button id="btn-rr-tap" class="tap-btn" onclick="handleRRTap()">
-                TAP
-                <span>BREATH</span>
+        <button class="btn-back" onclick="showView('view-home')">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> Back to Home
+        </button>
+        
+        <div class="card">
+            <div class="timer-display">
+                <div class="time-big" id="rr-time-display">0</div>
+                <div class="time-label" id="rr-status-text">Seconds</div>
+            </div>
+
+            <button id="btn-rr-tap" class="tap-btn-lg" onclick="handleRRTap()">
+                Tap for Breath
+                <span style="font-size:0.8rem; font-weight:500; opacity:0.8; margin-top:8px;">(Tap on inhale)</span>
             </button>
-
-            <div style="margin-top:30px;">
-                <div style="font-size:0.8rem; font-weight:700; color:var(--muted); text-transform:uppercase;">Calculated Rate</div>
-                <div id="rr-display" style="font-size:3.5rem; font-weight:800; color:var(--ink); line-height:1.1;">--</div>
-                <div style="font-size:1rem; color:var(--accent); font-weight:600;">breaths / min</div>
-            </div>
             
-            <div id="rr-stats" style="margin-top:20px; font-size:0.9rem; color:var(--muted);">
-                Taps: 0 | Time: 0s
+            <div style="margin-top:24px; text-align:center; padding:16px; background:#f3f4f6; border-radius:16px;">
+                 <div style="font-size:0.9rem; font-weight:700; color:var(--muted); text-transform:uppercase; margin-bottom:4px;">Calculated Rate</div>
+                 <div style="font-size:3rem; font-weight:900; color:var(--ink);" id="rr-display">--</div>
+                 <div style="font-size:1rem; font-weight:600; color:var(--accent);">breaths / min</div>
+                 <div style="font-size:0.8rem; color:var(--muted); margin-top:8px;" id="rr-count">Count: 0</div>
             </div>
 
-            <button class="btn-launch btn-reset" onclick="resetRR()">Reset</button>
+            <button class="btn-launch btn-reset" onclick="resetRR()">Reset Timer</button>
         </div>
     </div>
     
@@ -404,7 +430,7 @@
     const BASE_URL = "https://datalibrary-rc.health.wa.gov.au/surveys/?s=K3WAPC4KKXWNTF3F";
     const MET_EMAIL = "fshsqr.MET@health.wa.gov.au";
     
-    // ----- DATA LISTS (Full lists preserved) -----
+    // ----- DATA LISTS -----
     const LOCATIONS = [
         {v:1, t:"3A"}, {v:2, t:"3B"}, {v:3, t:"3DMFAU"}, {v:4, t:"Birth Suite"}, {v:5, t:"3C"},
         {v:6, t:"4A"}, {v:7, t:"4B"}, {v:8, t:"4C"}, {v:9, t:"4D"}, {v:10, t:"5A"},
@@ -423,70 +449,21 @@
         {v:62, t:"SRS Pool"}, {v:63, t:"SRS Gym"}, {v:64, t:"Transit Lounge"}
     ];
     const TEAMS = [
-        {v:"1", t:"Acute Surgical Unit (ASU)"},
-        {v:"2", t:"Advanced Heart Failure and Transplant (AHFT)"},
-        {v:"3", t:"Advanced Lung (ALDU)"},
-        {v:"4", t:"Anaesthesia and Pain medicine"},
-        {v:"5", t:"Breast service"},
-        {v:"6", t:"Burns"},
-        {v:"7", t:"Cardiology services"},
-        {v:"8", t:"Cardiothoracics"},
-        {v:"9", t:"Colorectal"},
-        {v:"10", t:"Covid Respiratory"},
-        {v:"11", t:"Dentistry/Dental"},
-        {v:"12", t:"Dermatology"},
-        {v:"13", t:"Ear Nose and Throat"},
-        {v:"14", t:"Emergency medicine / ED / AECC"},
-        {v:"15", t:"Endocrinology and Diabeties"},
-        {v:"16", t:"Gastroenterology"},
-        {v:"17", t:"General medicine / AMU"},
-        {v:"18", t:"General surgery"},
-        {v:"19", t:"Geriatric medicine (Geri's)"},
-        {v:"20", t:"Gynaecological oncology"},
-        {v:"21", t:"Gynaecology"},
-        {v:"22", t:"Haematology"},
-        {v:"23", t:"Hyperbaric medicine"},
-        {v:"24", t:"Immunology and allergy (clinical)"},
-        {v:"25", t:"Infectious diseases (ID)"},
-        {v:"26", t:"Intensive care medicine"},
-        {v:"27", t:"Maternal-fetal medicine"},
-        {v:"28", t:"MDFU (Multi-disciplinary Foot)"},
-        {v:"29", t:"Medical oncology"},
-        {v:"30", t:"Microbiolology"},
-        {v:"31", t:"Neonatal or perinatal medicine"},
-        {v:"32", t:"Nephrology and Dialysis"},
-        {v:"33", t:"Neurology"},
-        {v:"34", t:"Neurosurgery"},
-        {v:"35", t:"Nuclear medicine"},
-        {v:"36", t:"Nuclear medicine"},
-        {v:"37", t:"Obstetrics"},
-        {v:"38", t:"Oncology (Medical Oncology)"},
-        {v:"39", t:"Operating Theatres"},
-        {v:"40", t:"Ophthalmology"},
-        {v:"41", t:"Oral and maxillofacial surgery"},
-        {v:"42", t:"Orthopaedic surgery"},
-        {v:"43", t:"Paediatric surgery"},
-        {v:"44", t:"Paediatrics (general)"},
-        {v:"45", t:"Pathology"},
-        {v:"46", t:"Plastic and reconstructive surgery (plastics)"},
-        {v:"47", t:"Psychiatry"},
-        {v:"48", t:"Psychiatry - Child"},
-        {v:"49", t:"Psychogeriatrics"},
-        {v:"50", t:"Radiation Oncology (Rad Onc)"},
-        {v:"51", t:"Radiology and Medical Imaging"},
-        {v:"52", t:"Radiotherapy"},
-        {v:"53", t:"Rehabilitation medicine (Rehab)"},
-        {v:"54", t:"Renal"},
-        {v:"55", t:"Respiratory and sleep medicine"},
-        {v:"56", t:"Rheumatology"},
-        {v:"57", t:"Spinal"},
-        {v:"58", t:"Upper GI"},
-        {v:"59", t:"Urogynaecology"},
-        {v:"60", t:"Urology"},
-        {v:"61", t:"Vascular Surgery"}
+        {v:"1", t:"Acute Surgical Unit (ASU)"}, {v:"2", t:"Advanced Heart Failure and Transplant (AHFT)"}, {v:"3", t:"Advanced Lung (ALDU)"}, {v:"4", t:"Anaesthesia and Pain medicine"}, {v:"5", t:"Breast service"},
+        {v:"6", t:"Burns"}, {v:"7", t:"Cardiology services"}, {v:"8", t:"Cardiothoracics"}, {v:"9", t:"Colorectal"}, {v:"10", t:"Covid Respiratory"},
+        {v:"11", t:"Dentistry/Dental"}, {v:"12", t:"Dermatology"}, {v:"13", t:"Ear Nose and Throat"}, {v:"14", t:"Emergency medicine / ED / AECC"}, {v:"15", t:"Endocrinology and Diabeties"},
+        {v:"16", t:"Gastroenterology"}, {v:"17", t:"General medicine / AMU"}, {v:"18", t:"General surgery"}, {v:"19", t:"Geriatric medicine (Geri's)"}, {v:"20", t:"Gynaecological oncology"},
+        {v:"21", t:"Gynaecology"}, {v:"22", t:"Haematology"}, {v:"23", t:"Hyperbaric medicine"}, {v:"24", t:"Immunology and allergy (clinical)"}, {v:"25", t:"Infectious diseases (ID)"},
+        {v:"26", t:"Intensive care medicine"}, {v:"27", t:"Maternal-fetal medicine"}, {v:"28", t:"MDFU (Multi-disciplinary Foot)"}, {v:"29", t:"Medical oncology"}, {v:"30", t:"Microbiolology"},
+        {v:"31", t:"Neonatal or perinatal medicine"}, {v:"32", t:"Nephrology and Dialysis"}, {v:"33", t:"Neurology"}, {v:"34", t:"Neurosurgery"}, {v:"35", t:"Nuclear medicine"},
+        {v:"36", t:"Nuclear medicine"}, {v:"37", t:"Obstetrics"}, {v:"38", t:"Oncology (Medical Oncology)"}, {v:"39", t:"Operating Theatres"}, {v:"40", t:"Ophthalmology"},
+        {v:"41", t:"Oral and maxillofacial surgery"}, {v:"42", t:"Orthopaedic surgery"}, {v:"43", t:"Paediatric surgery"}, {v:"44", t:"Paediatrics (general)"}, {v:"45", t:"Pathology"},
+        {v:"46", t:"Plastic and reconstructive surgery (plastics)"}, {v:"47", t:"Psychiatry"}, {v:"48", t:"Psychiatry - Child"}, {v:"49", t:"Psychogeriatrics"}, {v:"50", t:"Radiation Oncology (Rad Onc)"},
+        {v:"51", t:"Radiology and Medical Imaging"}, {v:"52", t:"Radiotherapy"}, {v:"53", t:"Rehabilitation medicine (Rehab)"}, {v:"54", t:"Renal"}, {v:"55", t:"Respiratory and sleep medicine"},
+        {v:"56", t:"Rheumatology"}, {v:"57", t:"Spinal"}, {v:"58", t:"Upper GI"}, {v:"59", t:"Urogynaecology"}, {v:"60", t:"Urology"}, {v:"61", t:"Vascular Surgery"}
     ];
 
-    // ----- POPULATE DROPDOWNS -----
+    // ----- INITIALIZATION -----
     const locSelect = document.getElementById('cc-location');
     LOCATIONS.forEach(l => {
         let opt = document.createElement('option');
@@ -499,7 +476,6 @@
         opt.value = t.v; opt.text = t.t; teamSelect.add(opt);
     });
 
-    // ----- NAVIGATION -----
     const views = ['view-home', 'view-care-log', 'view-adds', 'view-rr'];
     function showView(viewId) {
         views.forEach(v => document.getElementById(v).classList.add('hidden'));
@@ -511,16 +487,9 @@
     function syncInputs() {
         const u = document.getElementById('urn-main').value;
         const v = document.getElementById('visit-main').value;
-        if(u) {
-            document.getElementById('cc-urn').value = u;
-            document.getElementById('mini-urn').value = u;
-        }
-        if(v) {
-            document.getElementById('mini-visit').value = v;
-        }
+        if(u) { document.getElementById('cc-urn').value = u; }
     }
 
-    // ----- DATE INFO -----
     function getShiftInfo() {
         const now = new Date();
         const d = ("0"+now.getDate()).slice(-2);
@@ -532,11 +501,30 @@
     }
     document.getElementById('status').innerText = `Date: ${getShiftInfo().display}`;
 
-    // ----- ADDS CALCULATOR LOGIC (Ported from your JS file) -----
+    // ----- ADDS CALCULATOR LOGIC (UPGRADED) -----
     let currentAvpu = 'A';
+    let isOverrideMode = false;
+
+    function toggleOverride() {
+        isOverrideMode = document.getElementById('adds-override').checked;
+        const scoreBoxes = document.querySelectorAll('.score-box');
+        
+        scoreBoxes.forEach(box => {
+            if(isOverrideMode) {
+                box.removeAttribute('readonly');
+                box.classList.add('editable');
+            } else {
+                box.setAttribute('readonly', true);
+                box.classList.remove('editable');
+                // When turning off, re-run auto calc to fix any manual changes
+                runAddsCalc();
+            }
+        });
+    }
+
     function setAvpu(val) {
         currentAvpu = val;
-        document.querySelectorAll('#calc_avpu .select-btn').forEach(b => {
+        document.querySelectorAll('.avpu-btn').forEach(b => {
             b.classList.remove('active');
             if(b.dataset.value === val) b.classList.add('active');
         });
@@ -544,10 +532,12 @@
     }
     
     function resetAdds() {
+        document.getElementById('adds-override').checked = false;
+        toggleOverride(); // reset mode
+        
         ['calc_rr','calc_spo2','calc_o2_val','calc_sbp','calc_hr','calc_temp'].forEach(id => document.getElementById(id).value = '');
         document.querySelector('input[name="calc_o2_mode"][value="std"]').checked = true;
         setAvpu('A');
-        runAddsCalc();
     }
 
     function getAddsScore(type, val, mode='std') {
@@ -611,14 +601,22 @@
 
     function updateScoreUI(id, res) {
         const el = document.getElementById(id);
-        if(res.m) {
-            el.innerText = "M"; el.className = "calc-score m-crit";
-        } else {
-            el.innerText = res.s; el.className = "calc-score";
+        // Only update value if NOT in override mode
+        if(!isOverrideMode) {
+            el.value = res.m ? "M" : res.s;
         }
+        
+        // Always update visual style based on current value (even if manually typed)
+        const val = el.value;
+        el.className = 'score-box'; // reset
+        if(isOverrideMode) el.classList.add('editable');
+        
+        if(val === 'M' || val === 'm') el.classList.add('m-score');
+        else if(parseInt(val) > 0) el.classList.add('active-score');
     }
 
     function runAddsCalc() {
+        // Gather inputs
         const rr = document.getElementById('calc_rr').value;
         const spo2 = document.getElementById('calc_spo2').value;
         const o2Mode = document.querySelector('input[name="calc_o2_mode"]:checked').value;
@@ -627,6 +625,7 @@
         const hr = document.getElementById('calc_hr').value;
         const temp = document.getElementById('calc_temp').value;
 
+        // Calc Logic
         const rR = getAddsScore('rr', rr);
         const rSp = getAddsScore('spo2', spo2);
         const rO2 = getAddsScore('o2', o2Val, o2Mode);
@@ -639,69 +638,117 @@
         else if(currentAvpu === 'P') rAv.s = 3;
         else if(currentAvpu === 'U') { rAv.s = 3; rAv.m = true; }
 
+        // Update UI
         updateScoreUI('score_rr', rR);
         updateScoreUI('score_spo2', rSp);
-        document.getElementById('score_o2').innerText = rO2.s;
+        updateScoreUI('score_o2', rO2);
         updateScoreUI('score_sbp', rBp);
         updateScoreUI('score_hr', rHr);
-        document.getElementById('score_temp').innerText = rTp.s;
+        updateScoreUI('score_temp', rTp);
         updateScoreUI('score_avpu', rAv);
 
-        let total = rR.s + rSp.s + rO2.s + rBp.s + rHr.s + rTp.s + rAv.s;
-        let isM = (rR.m || rSp.m || rBp.m || rHr.m || rAv.m);
+        calculateTotal();
+    }
+
+    // Called when user manually changes a score in override mode
+    function runManualTotal() {
+        // Just refresh the colors and total
+        ['score_rr','score_spo2','score_o2','score_sbp','score_hr','score_temp','score_avpu'].forEach(id => {
+            const el = document.getElementById(id);
+            const val = el.value;
+            // update classes
+            el.className = 'score-box editable';
+            if(val === 'M' || val === 'm') el.classList.add('m-score');
+            else if(parseInt(val) > 0) el.classList.add('active-score');
+        });
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        let total = 0;
+        let isM = false;
+        
+        ['score_rr','score_spo2','score_o2','score_sbp','score_hr','score_temp','score_avpu'].forEach(id => {
+            const val = document.getElementById(id).value;
+            if(val === 'M' || val === 'm') isM = true;
+            else if(!isNaN(parseInt(val))) total += parseInt(val);
+        });
 
         const totalDisplay = document.getElementById('calc_total_display');
         totalDisplay.innerText = total + (isM ? ' (M)' : '');
-        totalDisplay.style.color = (total >= 8 || isM) ? 'var(--red)' : 'white';
+        totalDisplay.style.color = (total >= 8 || isM) ? 'var(--red)' : '#ffffff';
     }
 
-    // ----- RESP RATE TIMER LOGIC (NEW) -----
+
+    // ----- RESP RATE TIMER LOGIC (UPGRADED) -----
     let rrTaps = [];
+    let rrInterval = null;
     
     function handleRRTap() {
         const now = Date.now();
         rrTaps.push(now);
         
-        // Need at least 2 taps to calc interval
+        if (rrTaps.length === 1) {
+            // First tap started
+            startTimerDisplay();
+        }
+
         if (rrTaps.length > 1) {
             const first = rrTaps[0];
             const durationSec = (now - first) / 1000;
-            const count = rrTaps.length - 1; // number of intervals
-            
-            // Rate = (intervals / duration) * 60
+            const count = rrTaps.length - 1; // intervals
             const rate = Math.round((count / durationSec) * 60);
             
             document.getElementById('rr-display').innerText = rate;
-            document.getElementById('rr-stats').innerText = `Taps: ${rrTaps.length} | Time: ${durationSec.toFixed(1)}s`;
-        } else {
-            document.getElementById('rr-display').innerText = "--";
-            document.getElementById('rr-stats').innerText = `Taps: 1 | Started...`;
+            document.getElementById('rr-count').innerText = `Breath Count: ${rrTaps.length-1}`; // -1 because 1st tap is start
         }
         
-        // Visual feedback
+        // Pulse animation
         const btn = document.getElementById('btn-rr-tap');
-        btn.style.transform = "scale(0.92)";
+        btn.style.transform = "scale(0.95)";
         setTimeout(() => btn.style.transform = "scale(1)", 100);
+    }
+    
+    function startTimerDisplay() {
+        if(rrInterval) clearInterval(rrInterval);
+        const startTime = Date.now();
+        const display = document.getElementById('rr-time-display');
+        const status = document.getElementById('rr-status-text');
+        
+        rrInterval = setInterval(() => {
+            const diff = Math.floor((Date.now() - startTime) / 1000);
+            display.innerText = diff;
+            
+            if(diff >= 60) {
+                display.style.color = 'var(--success)';
+                status.innerText = "FULL MINUTE REACHED";
+                status.style.color = 'var(--success)';
+            } else {
+                display.style.color = 'white';
+                status.innerText = "SECONDS";
+                status.style.color = 'white';
+            }
+        }, 200);
     }
     
     function resetRR() {
         rrTaps = [];
+        clearInterval(rrInterval);
         document.getElementById('rr-display').innerText = "--";
-        document.getElementById('rr-stats').innerText = "Taps: 0 | Time: 0s";
+        document.getElementById('rr-time-display').innerText = "0";
+        document.getElementById('rr-time-display').style.color = "white";
+        document.getElementById('rr-status-text').innerText = "Seconds";
+        document.getElementById('rr-count').innerText = "Count: 0";
     }
 
-    // ----- RESET FUNCTION (MAIN) -----
+    // ----- UTILS & PRESERVED FUNC -----
     function resetAllFields() {
-        if (confirm("Are you sure you want to clear all data? This cannot be undone.")) {
+        if (confirm("Clear all data?")) {
             document.getElementById('urn-main').value = "";
             document.getElementById('visit-main').value = "";
-            
-            const fields = ['cc-surname', 'cc-given', 'cc-bed', 'cc-urn', 'cc-consultant', 'cc-caller', 'cc-rel', 'cc-story', 'mini-urn', 'mini-visit'];
-            fields.forEach(f => {
-                const el = document.getElementById(f);
-                if(el) el.value = "";
+            ['cc-surname', 'cc-given', 'cc-bed', 'cc-urn', 'cc-consultant', 'cc-caller', 'cc-rel', 'cc-story'].forEach(f => {
+                const el = document.getElementById(f); if(el) el.value = "";
             });
-            
             document.getElementById('cc-location').value = "";
             document.getElementById('cc-team').value = "";
             document.getElementById('cc-inpatient').value = "Yes";
@@ -710,27 +757,20 @@
             document.getElementById('cc-type-comm').checked = false;
             document.getElementById('cc-type-comp').checked = false;
             document.getElementById('cc-digital').checked = true;
-            
-            alert("Form cleared.");
-            showView('view-home');
+            alert("Cleared."); showView('view-home');
         }
     }
 
-    // ----- SCANNER LOGIC -----
     let scanner=null; let isScanning=false;
     function toggleScanner(){ if(isScanning) stopScan(); else startScan(); }
-    
     function startScan(){
         document.getElementById('reader').style.display='block';
         document.getElementById('scan-text').innerText="STOP CAMERA";
         isScanning=true;
         if(!scanner) scanner = new Html5Qrcode("reader");
-        scanner.start({facingMode:"environment"}, {fps:10, qrbox:250}, (txt)=>{
-            processQrResult(txt);
-            stopScan();
-        }).catch(()=>{ alert("Camera error"); stopScan(); });
+        scanner.start({facingMode:"environment"}, {fps:10, qrbox:250}, (txt)=>{ processQrResult(txt); stopScan(); })
+               .catch(()=>{ alert("Camera error"); stopScan(); });
     }
-    
     function stopScan(){
         if(scanner) scanner.stop().then(()=>{
             document.getElementById('reader').style.display='none';
@@ -738,15 +778,14 @@
             isScanning=false;
         });
     }
-
+    
     const fileinput = document.getElementById('qr-input-file');
     fileinput.addEventListener('change', e => {
         if (e.target.files.length === 0) return;
-        const imageFile = e.target.files[0];
         if (!scanner) scanner = new Html5Qrcode("reader");
-        scanner.scanFile(imageFile, true)
-            .then(txt => { processQrResult(txt); alert("QR Code Detected Successfully!"); })
-            .catch(err => { console.error(err); alert("Could not find a QR code in that photo."); });
+        scanner.scanFile(e.target.files[0], true)
+            .then(txt => { processQrResult(txt); alert("Scanned!"); })
+            .catch(err => { console.error(err); alert("No QR found."); });
     });
 
     function processQrResult(txt) {
@@ -758,102 +797,6 @@
         if (navigator.vibrate) navigator.vibrate(200);
     }
 
-    // ----- PDF GENERATION (Preserved Logic) -----
-    async function generatePDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        const loc = document.getElementById('cc-location');
-        const wardTxt = loc.options[loc.selectedIndex].text === "Select Ward..." ? "" : loc.options[loc.selectedIndex].text;
-        const teamSel = document.getElementById('cc-team');
-        const teamTxt = teamSel.options[teamSel.selectedIndex].text === "Select Team..." ? "" : teamSel.options[teamSel.selectedIndex].text;
-        
-        const d = {
-            sur: document.getElementById('cc-surname').value,
-            giv: document.getElementById('cc-given').value,
-            ward: wardTxt,
-            bed: document.getElementById('cc-bed').value,
-            urn: document.getElementById('cc-urn').value,
-            inpt: document.getElementById('cc-inpatient').value,
-            cons: document.getElementById('cc-consultant').value,
-            team: teamTxt,
-            caller: document.getElementById('cc-caller').value,
-            rel: document.getElementById('cc-rel').value,
-            date: getShiftInfo().display,
-            consent: document.getElementById('cc-consent').value,
-            story: document.getElementById('cc-story').value,
-            digi: document.getElementById('cc-digital').checked ? "YES" : "NO",
-            phys: document.getElementById('cc-type-phys').checked ? "YES" : "NO",
-            comm: document.getElementById('cc-type-comm').checked ? "YES" : "NO",
-            comp: document.getElementById('cc-type-comp').checked ? "YES" : "NO"
-        };
-
-        const margin = 14; const pageW = 210; const tableW = 182; const col1 = 70;
-        let y = 15; const rowH = 9;
-
-        doc.setFont("helvetica", "bold"); doc.setFontSize(16);
-        doc.text("Fiona Stanley Hospital", pageW/2, y, {align:"center"});
-        y += 8; doc.setFontSize(13);
-        doc.text("Patient Carer Activated Escalation (CARE) call received log", pageW/2, y, {align:"center"});
-        y += 12; doc.setLineWidth(0.2); doc.setFontSize(10);
-
-        function drawRow(label, val) {
-            doc.rect(margin, y, tableW, rowH);
-            doc.line(margin+col1-2, y, margin+col1-2, y+rowH);
-            doc.setFont("helvetica", "bold"); doc.text(label, margin+2, y+6);
-            doc.setFont("helvetica", "normal"); doc.text(val || "", margin+col1, y+6);
-            y += rowH;
-        }
-
-        drawRow("Patient Surname", d.sur); drawRow("Patient Given Name", d.giv);
-        drawRow("Ward", d.ward); drawRow("Bed Number", d.bed);
-        drawRow("UMRN", d.urn); drawRow("Current Inpatient", d.inpt);
-        drawRow("Consultant Name", d.cons); drawRow("Team", d.team);
-        drawRow("Caller's Name", d.caller); drawRow("Caller's Relationship to Patient", d.rel);
-        drawRow("Date Call Received", d.date); drawRow("Consent for Follow-up Contact", d.consent);
-
-        const checkH = 22;
-        doc.rect(margin, y, tableW, checkH);
-        doc.line(margin+col1-2, y, margin+col1-2, y+checkH);
-        doc.setFont("helvetica", "bold");
-        doc.text("Physical / Mental State Deterioration", margin+2, y+6);
-        doc.text("Communication Issues", margin+2, y+12);
-        doc.text("Complaint", margin+2, y+18);
-        doc.setFont("helvetica", "normal");
-        const yesNoX = margin + col1;
-        doc.text(d.phys, yesNoX, y+6); doc.text(d.comm, yesNoX, y+12); doc.text(d.comp, yesNoX, y+18);
-        y += checkH;
-
-        y+=5; doc.setFont("helvetica", "bold"); doc.text("Details", margin, y); y+=2;
-
-        const lines = doc.splitTextToSize(d.story, tableW-4);
-        const lineHeight = 5; let startBoxY = y;
-        doc.line(margin, y, margin + tableW, y);
-
-        for(let i=0; i<lines.length; i++){
-            if(y > 275) {
-                 doc.line(margin, startBoxY, margin, y + lineHeight);
-                 doc.line(margin+tableW, startBoxY, margin+tableW, y + lineHeight);
-                 doc.line(margin, y + lineHeight, margin+tableW, y + lineHeight);
-                 doc.addPage(); y = 20; startBoxY = y; doc.line(margin, y, margin+tableW, y); 
-            }
-            doc.setFont("helvetica", "normal"); doc.text(lines[i], margin+2, y+5); y += lineHeight;
-        }
-        if(y - startBoxY < 50 && lines.length < 15) y = startBoxY + 50; 
-        doc.line(margin, startBoxY, margin, y); doc.line(margin+tableW, startBoxY, margin+tableW, y);
-        doc.line(margin, y, margin+tableW, y);
-
-        if(y > 270) { doc.addPage(); y = 20; }
-        doc.rect(margin, y, tableW, rowH);
-        doc.line(margin+col1-2, y, margin+col1-2, y+rowH);
-        doc.setFont("helvetica", "bold"); doc.text("Digital Medical Record Completed", margin+2, y+6);
-        doc.setFont("helvetica", "normal"); doc.text(d.digi, margin+col1, y+6);
-        
-        y += 15; doc.setFontSize(9);
-        doc.text("Please return completed forms to  " + MET_EMAIL, pageW/2, y, {align:"center"});
-        doc.save(`CARE_Call_Log_${d.urn}.pdf`);
-    }
-
     function copyToClipboard(id, btn) {
         const val = document.getElementById(id).value;
         if(!val) return;
@@ -863,33 +806,86 @@
         });
     }
 
+    async function generatePDF() {
+        const { jsPDF } = window.jspdf; const doc = new jsPDF();
+        const loc = document.getElementById('cc-location');
+        const wardTxt = loc.options[loc.selectedIndex].text === "Select Ward..." ? "" : loc.options[loc.selectedIndex].text;
+        const teamSel = document.getElementById('cc-team');
+        const teamTxt = teamSel.options[teamSel.selectedIndex].text === "Select Team..." ? "" : teamSel.options[teamSel.selectedIndex].text;
+        
+        const d = {
+            sur: document.getElementById('cc-surname').value, giv: document.getElementById('cc-given').value,
+            ward: wardTxt, bed: document.getElementById('cc-bed').value, urn: document.getElementById('cc-urn').value,
+            inpt: document.getElementById('cc-inpatient').value, cons: document.getElementById('cc-consultant').value,
+            team: teamTxt, caller: document.getElementById('cc-caller').value, rel: document.getElementById('cc-rel').value,
+            date: getShiftInfo().display, consent: document.getElementById('cc-consent').value, story: document.getElementById('cc-story').value,
+            digi: document.getElementById('cc-digital').checked ? "YES" : "NO",
+            phys: document.getElementById('cc-type-phys').checked ? "YES" : "NO",
+            comm: document.getElementById('cc-type-comm').checked ? "YES" : "NO",
+            comp: document.getElementById('cc-type-comp').checked ? "YES" : "NO"
+        };
+
+        const margin = 14; const pageW = 210; const tableW = 182; const col1 = 70; let y = 15; const rowH = 9;
+        doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.text("Fiona Stanley Hospital", pageW/2, y, {align:"center"});
+        y += 8; doc.setFontSize(13); doc.text("Patient Carer Activated Escalation (CARE) call received log", pageW/2, y, {align:"center"});
+        y += 12; doc.setLineWidth(0.2); doc.setFontSize(10);
+
+        function drawRow(label, val) {
+            doc.rect(margin, y, tableW, rowH); doc.line(margin+col1-2, y, margin+col1-2, y+rowH);
+            doc.setFont("helvetica", "bold"); doc.text(label, margin+2, y+6);
+            doc.setFont("helvetica", "normal"); doc.text(val || "", margin+col1, y+6); y += rowH;
+        }
+
+        drawRow("Patient Surname", d.sur); drawRow("Patient Given Name", d.giv); drawRow("Ward", d.ward); drawRow("Bed Number", d.bed);
+        drawRow("UMRN", d.urn); drawRow("Current Inpatient", d.inpt); drawRow("Consultant Name", d.cons); drawRow("Team", d.team);
+        drawRow("Caller's Name", d.caller); drawRow("Caller's Relationship to Patient", d.rel); drawRow("Date Call Received", d.date); drawRow("Consent for Follow-up Contact", d.consent);
+
+        const checkH = 22; doc.rect(margin, y, tableW, checkH); doc.line(margin+col1-2, y, margin+col1-2, y+checkH);
+        doc.setFont("helvetica", "bold"); doc.text("Physical / Mental State Deterioration", margin+2, y+6); doc.text("Communication Issues", margin+2, y+12); doc.text("Complaint", margin+2, y+18);
+        doc.setFont("helvetica", "normal"); const yesNoX = margin + col1;
+        doc.text(d.phys, yesNoX, y+6); doc.text(d.comm, yesNoX, y+12); doc.text(d.comp, yesNoX, y+18); y += checkH;
+
+        y+=5; doc.setFont("helvetica", "bold"); doc.text("Details", margin, y); y+=2;
+        const lines = doc.splitTextToSize(d.story, tableW-4); const lineHeight = 5; let startBoxY = y;
+        doc.line(margin, y, margin + tableW, y);
+
+        for(let i=0; i<lines.length; i++){
+            if(y > 275) {
+                 doc.line(margin, startBoxY, margin, y + lineHeight); doc.line(margin+tableW, startBoxY, margin+tableW, y + lineHeight);
+                 doc.line(margin, y + lineHeight, margin+tableW, y + lineHeight); doc.addPage(); y = 20; startBoxY = y; doc.line(margin, y, margin+tableW, y); 
+            }
+            doc.setFont("helvetica", "normal"); doc.text(lines[i], margin+2, y+5); y += lineHeight;
+        }
+        if(y - startBoxY < 50 && lines.length < 15) y = startBoxY + 50; 
+        doc.line(margin, startBoxY, margin, y); doc.line(margin+tableW, startBoxY, margin+tableW, y); doc.line(margin, y, margin+tableW, y);
+
+        if(y > 270) { doc.addPage(); y = 20; }
+        doc.rect(margin, y, tableW, rowH); doc.line(margin+col1-2, y, margin+col1-2, y+rowH);
+        doc.setFont("helvetica", "bold"); doc.text("Digital Medical Record Completed", margin+2, y+6);
+        doc.setFont("helvetica", "normal"); doc.text(d.digi, margin+col1, y+6);
+        y += 15; doc.setFontSize(9); doc.text("Please return completed forms to  " + MET_EMAIL, pageW/2, y, {align:"center"});
+        doc.save(`CARE_Call_Log_${d.urn}.pdf`);
+    }
+
     function openEmail() {
-        const date = getShiftInfo().display;
-        const body = `Dear ALERT Admin Team,\n\nPlease find Care Call Log attached from ${date}.\n\nBest regards,`;
-        window.location.href = `mailto:${MET_EMAIL}?subject=CARE Call Log - ${date}&body=${encodeURIComponent(body)}`;
+        const d = getShiftInfo().display; const body = `Dear ALERT Admin Team,\n\nPlease find Care Call Log attached from ${d}.\n\nBest regards,`;
+        window.location.href = `mailto:${MET_EMAIL}?subject=CARE Call Log - ${d}&body=${encodeURIComponent(body)}`;
     }
 
     function launchRedcap(mode) {
-        let p = [];
-        const t = getShiftInfo();
+        let p = []; const t = getShiftInfo();
         p.push(`shift_date=${t.api}`); p.push(`shifttype=${t.code}`); p.push(`site=1`);
         
-        // --- PRESERVED REDCAP LOGIC ---
         if(mode==='care'){
             p.push(`alert_team=1`); p.push(`contactreason=5`); p.push(`int_group_a___5=1`);
-            const locVal = document.getElementById('cc-location').value;
-            if(locVal) p.push(`location_fs=${locVal}`);
-            const teamVal = document.getElementById('cc-team').value;
-            if(teamVal) p.push(`specialty=${teamVal}`);
+            const locVal = document.getElementById('cc-location').value; if(locVal) p.push(`location_fs=${locVal}`);
+            const teamVal = document.getElementById('cc-team').value; if(teamVal) p.push(`specialty=${teamVal}`);
         } else if(mode==='met'){
-            p.push(`contactreason=1`); p.push(`alert_team=1`); p.push(`adds_score=9`);
-            p.push(`met_call_hoot=1`); p.push(`outcome=3`); p.push(`int_group_e___41=1`);
-            ["6","8","9","10"].forEach(x=>p.push(`int_group_a___${x}=1`));
-            ["11","16","19"].forEach(x=>p.push(`int_group_b___${x}=1`));
-            p.push(`int_group_c___25=1`); p.push(`bgl_ketones_detail=BGL`);
+            p.push(`contactreason=1`); p.push(`alert_team=1`); p.push(`adds_score=9`); p.push(`met_call_hoot=1`);
+            p.push(`outcome=3`); p.push(`int_group_e___41=1`); p.push(`int_group_c___25=1`); p.push(`bgl_ketones_detail=BGL`);
+            ["6","8","9","10"].forEach(x=>p.push(`int_group_a___${x}=1`)); ["11","16","19"].forEach(x=>p.push(`int_group_b___${x}=1`));
         } else if(mode==='rounding'){
-            p.push(`alert_team=2`); p.push(`int_group_a___8=1`); 
-            p.push(`int_group_b___19=1`); p.push(`int_group_c___25=1`);
+            p.push(`alert_team=2`); p.push(`int_group_a___8=1`); p.push(`int_group_b___19=1`); p.push(`int_group_c___25=1`);
         }
         window.open(`${BASE_URL}&${p.join('&')}`, '_blank');
     }
