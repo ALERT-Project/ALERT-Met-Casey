@@ -7,7 +7,6 @@
   <title>ALERT Tool Suite</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
@@ -188,7 +187,19 @@
     .cb-row { display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; font-weight: 600; line-height: 1.4; }
     .cb-row input { width: 24px; height: 24px; accent-color: var(--accent); flex-shrink: 0; margin-top: 0px; }
     
-    #reader { width: 100%; border-radius: 12px; overflow: hidden; display: none; margin-bottom: 12px; background: #000; }
+    /* PASTE AREA STYLES */
+    .paste-area {
+        border: 2px dashed var(--accent);
+        background: #f0fdfa;
+    }
+    .success-msg {
+        color: var(--success);
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-align: center;
+        min-height: 1.5em;
+        margin-top: 8px;
+    }
   </style>
 </head>
 <body>
@@ -200,29 +211,20 @@
   <div class="container">
     
     <div id="view-home">
-        <div class="card">
-            <div id="reader"></div>
-            <button id="btn-scan-toggle" class="btn-launch" style="background:#111827; gap:12px; margin-bottom: 10px;" onclick="toggleScanner()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/>
-                </svg>
-                <span id="scan-text">Scan from Sticker QR Code</span>
-            </button>
-            <input type="file" id="qr-input-file" accept="image/*" class="hidden">
-            <button class="btn-launch" style="background:#4b5563; gap:12px;" onclick="document.getElementById('qr-input-file').click()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
-                </svg>
-                <span>Upload Photo</span>
-            </button>
+        <div class="card paste-area">
+            <div class="section-title" style="color:var(--accent)">Import Scan Data</div>
+            <div class="input-wrapper">
+                <label class="input-label">Paste QR Text Here</label>
+                <input type="text" id="paste-input" placeholder='{"u":"...","e":"..."}' oninput="handlePaste(this)">
+            </div>
+            <div id="paste-msg" class="success-msg"></div>
         </div>
-
         <div class="card">
             <div class="section-title">Patient Identification</div>
             <div class="input-row">
                 <div class="input-wrapper">
                     <label class="input-label">URN (UMRN)</label>
-                    <input type="text" id="urn-main" inputmode="numeric" placeholder="Scan..." oninput="syncInputs()">
+                    <input type="text" id="urn-main" inputmode="text" placeholder="Scan..." oninput="syncInputs()">
                 </div>
                 <button class="btn-copy-match" onclick="copyToClipboard('urn-main', this)">COPY</button>
             </div>
@@ -757,44 +759,40 @@
             document.getElementById('cc-type-comm').checked = false;
             document.getElementById('cc-type-comp').checked = false;
             document.getElementById('cc-digital').checked = true;
+            document.getElementById('paste-input').value = ""; // Clear paste box on reset
+            document.getElementById('paste-msg').innerText = ""; 
             alert("Cleared."); showView('view-home');
         }
     }
 
-    let scanner=null; let isScanning=false;
-    function toggleScanner(){ if(isScanning) stopScan(); else startScan(); }
-    function startScan(){
-        document.getElementById('reader').style.display='block';
-        document.getElementById('scan-text').innerText="STOP CAMERA";
-        isScanning=true;
-        if(!scanner) scanner = new Html5Qrcode("reader");
-        scanner.start({facingMode:"environment"}, {fps:10, qrbox:250}, (txt)=>{ processQrResult(txt); stopScan(); })
-               .catch(()=>{ alert("Camera error"); stopScan(); });
+    // --- QR PASTE HANDLING ---
+    function handlePaste(el) {
+        const txt = el.value;
+        if(txt.length < 5) return; // Ignore very short text
+        processQrResult(txt);
     }
-    function stopScan(){
-        if(scanner) scanner.stop().then(()=>{
-            document.getElementById('reader').style.display='none';
-            document.getElementById('scan-text').innerText="Scan QR code on sticker";
-            isScanning=false;
-        });
-    }
-    
-    const fileinput = document.getElementById('qr-input-file');
-    fileinput.addEventListener('change', e => {
-        if (e.target.files.length === 0) return;
-        if (!scanner) scanner = new Html5Qrcode("reader");
-        scanner.scanFile(e.target.files[0], true)
-            .then(txt => { processQrResult(txt); alert("Scanned!"); })
-            .catch(err => { console.error(err); alert("No QR found."); });
-    });
 
     function processQrResult(txt) {
         const uMatch = txt.match(/"u"\s*:\s*"([^"]+)"/i) || txt.match(/([A-Z]\d{7})/i);
         if (uMatch && uMatch[1]) document.getElementById('urn-main').value = uMatch[1].toUpperCase();
+        
         const vMatch = txt.match(/"e"\s*:\s*"?(\d+)"?/i) || txt.match(/\b(\d{8})\b/);
-        if (vMatch && vMatch[1]) document.getElementById('visit-main').value = vMatch[1];
+        
+        if (vMatch && vMatch[1]) {
+            const visitVal = vMatch[1];
+            document.getElementById('visit-main').value = visitVal;
+            
+            // Auto Copy Logic
+            navigator.clipboard.writeText(visitVal).then(() => {
+                const msg = document.getElementById('paste-msg');
+                msg.innerText = "Visit Number Copied to Clipboard!";
+                setTimeout(() => msg.innerText = "", 3000);
+            }).catch(err => {
+                console.error("Clipboard error:", err);
+            });
+        }
+        
         syncInputs();
-        if (navigator.vibrate) navigator.vibrate(200);
     }
 
     function copyToClipboard(id, btn) {
